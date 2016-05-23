@@ -1,10 +1,28 @@
 
 /**
-Generates a map.
+Generates a map for dungeons-crawling games.
 Original idea found here: http://web.archive.org/web/20110825054218/http://properundead.com/2009/03/cave-generator.html
 
 @author mtancoigne, 15/05/2016
 @license MIT
+
+The object can be created with an object of options as follow:
+{
+  // Base map width
+  x: integer,
+  // Base map width
+  y: integer,
+  // Number of subdivisions
+  passes: integer,
+  // Cleaning level (0-5)
+  cleanLevel: integer,
+  // Percentage of walls
+  wallPercent: integer,
+  // When creating sub-cells, percentage of chances to have the same type:
+  sameSubCellPercent:integer,
+  // Css prefix for classes
+  cssPrefix: string
+};
 */
 var MapGen=function(options){
   var o={
@@ -41,8 +59,8 @@ var MapGen=function(options){
   this.grid=[];
   // Room data
   this.rooms=[];
-  this.roomsData={};
-  this.roomLocations=[];
+  this.cellsData={};
+
 
   /**
     Returns the current cell type, or a WALL if outside of the map.
@@ -185,7 +203,7 @@ var MapGen=function(options){
   /**
     Finds all the rooms in the map
   */
-  this._findRooms=function(){
+  this.createRooms=function(){
     var roomId=0; // Number of rooms
     for(let i=0; i<this.grid.length;i++){
       for(let j=0; j<this.grid[i].length;j++){
@@ -193,11 +211,11 @@ var MapGen=function(options){
         if(this.grid[i][j]===FLOOR){
           // New room
           if(this._isInARoom(i, j)===false){
-            // Adding cell to rooms
-            this.rooms[roomId]=[];
-            this.rooms[roomId].push([i, j]);
+            // Adding first cell to room
+            this.rooms.push({id:roomId, cells:[[i, j]], box:[], pathesTo:[]});
+            //this.rooms[roomId].cells.push([i, j]);
             // Adding room to cells
-            this.roomsData[i+':'+j]=roomId;
+            this.cellsData[i+':'+j]=roomId;
             // Fill this room
             this._fillRoom(i, j, roomId);
             roomId++;
@@ -209,80 +227,26 @@ var MapGen=function(options){
   }
 
   /**
-    Remove really small rooms
+    Check if the given cell is already registered in a room.
+    If true, returns the room number.
   */
-  this._cleanRooms=function(minSize){
-    // Purge small rooms and convert them to walls
-    var removed=0;
-    // Array that will contain rooms kept
-    var newRooms=[];
-    for(let i=0; i<this.rooms.length; i++){
-      if(this.rooms[i].length <= minSize){
-        for(let j=0; j<this.rooms[i].length; j++){
-          // Wall conversion
-          this.grid[this.rooms[i][j][0]][this.rooms[i][j][1]]=WALL
-        }
-      }else{
-        // We keep the room
-        newRooms.push(this.rooms[i]);
-      }
+  this._isInARoom=function(x, y){
+    if(this.cellsData[x+':'+y]!=undefined){
+      return this.cellsData[x+':'+y];
     }
-    // Recalculate indexes for roomsData
-    console.log('Removed ' + (this.rooms.length-newRooms.length) + ' small rooms.');
-    this.rooms=newRooms;
-    this.roomsData={};
-    for(let i=0; i<this.rooms.length; i++){
-      for(let j=0; j<this.rooms[i].length; j++){
-        this.roomsData[this.rooms[i][j][0]+':'+this.rooms[i][j][1]]=i;
-      }
-    }
+    return false;
   }
 
   /**
-    Returns a room place "box"
+    Returns the index of the given room in the rooms list or false if not found.
   */
-  this._locateRoom=function(index){
-    // Init with first cell values, so the base for comparison is already in the room.
-    var xMin=this.rooms[index][0][1];
-    var xMax=this.rooms[index][0][1];
-    var yMin=this.rooms[index][0][0];
-    var yMax=this.rooms[index][0][0];
-    // Find boundaries
-    for(let i=0; i<this.rooms[index].length; i++){
-      if(this.rooms[index][i][0]>yMax){yMax=this.rooms[index][i][0]}
-      if(this.rooms[index][i][0]<yMin){yMin=this.rooms[index][i][0]}
-      if(this.rooms[index][i][1]>xMax){xMax=this.rooms[index][i][1]}
-      if(this.rooms[index][i][1]<xMin){xMin=this.rooms[index][i][1]}
-    }
-    return {room:index, xMin:xMin, xMax:xMax, yMin:yMin, yMax:yMax};
-  }
-
-  this._locateRooms=function(){
-    this.roomLocations=[];
+  this._getRoomIndex=function(roomId){
     for(let i=0; i<this.rooms.length; i++){
-      this.roomLocations.push(this._locateRoom(i));
+      if(this.rooms[i].id===roomId){
+        return i;
+      }
     }
-  }
-
-  /**
-    Searches for rooms that could communicate in a direct way.
-  */
-  this._findPathes=function(){
-
-  }
-
-  /*
-    Returns an array of rooms top or under the given one
-  */
-  this._findRoomsInCol=function(roomIndex){
-    // Define room boundaries
-
-  }
-  /*
-    Returns an array of rooms right or left of the given one
-  */
-  this._findRoomsInRow=function(roomIndex){
-
+    return false;
   }
 
   /*
@@ -295,8 +259,8 @@ var MapGen=function(options){
       // New cell ?
       if(this._isInARoom(cells[i][0], cells[i][1])===false){
         // Adding to list
-        this.rooms[index].push(cells[i]);
-        this.roomsData[cells[i][0]+':'+cells[i][1]]=index;
+        this.rooms[this._getRoomIndex(index)].cells.push(cells[i]);
+        this.cellsData[cells[i][0]+':'+cells[i][1]]=index;
         // Continue the filling
         this._fillRoom(cells[i][0], cells[i][1], index);
       }
@@ -320,14 +284,83 @@ var MapGen=function(options){
   }
 
   /**
-    Check if the given cell is already registered in a room.
-    If true, returns the room number.
+    Remove really small rooms
   */
-  this._isInARoom=function(x, y){
-    if(this.roomsData[x+':'+y]!=undefined){
-      return this.roomsData[x+':'+y];
+  this.removeSmallRooms=function(minSize){
+    // Purge small rooms and convert them to walls
+    var removed=0;
+    // Array that will contain rooms kept
+    var newRooms=[];
+    for(let i=0; i<this.rooms.length; i++){
+      if(this.rooms[i].cells.length <= minSize){
+        for(let j=0; j<this.rooms[i].cells.length; j++){
+          // Wall conversion
+          this.grid[this.rooms[i].cells[j][0]][this.rooms[i].cells[j][1]]=WALL
+        }
+      }else{
+        // We keep the room
+        newRooms.push(this.rooms[i]);
+      }
     }
-    return false;
+    // Recalculate indexes for cellsData
+    console.log('Removed ' + (this.rooms.length-newRooms.length) + ' small rooms.');
+    this.rooms=newRooms;
+    this.cellsData={};
+    for(let i=0; i<this.rooms.length; i++){
+      for(let j=0; j<this.rooms[i].cells.length; j++){
+        this.cellsData[this.rooms[i].cells[j][0]+':'+this.rooms[i].cells[j][1]]=this.rooms[i].id;
+      }
+    }
+  }
+
+  /**
+    Returns a room place "box"
+  */
+  this._locateRoom=function(roomId){
+    var index=this._getRoomIndex(roomId);
+    if(index===false){return false;}
+    // Init with first cell values, so the base for comparison is already in the room.
+    var xMin=this.rooms[index].cells[0][1];
+    var xMax=this.rooms[index].cells[0][1];
+    var yMin=this.rooms[index].cells[0][0];
+    var yMax=this.rooms[index].cells[0][0];
+    // Find boundaries
+    for(let i=0; i<this.rooms[index].cells.length; i++){
+      if(this.rooms[index].cells[i][0]>yMax){yMax=this.rooms[index].cells[i][0]}
+      if(this.rooms[index].cells[i][0]<yMin){yMin=this.rooms[index].cells[i][0]}
+      if(this.rooms[index].cells[i][1]>xMax){xMax=this.rooms[index].cells[i][1]}
+      if(this.rooms[index].cells[i][1]<xMin){xMin=this.rooms[index].cells[i][1]}
+    }
+    return {xMin:xMin, xMax:xMax, yMin:yMin, yMax:yMax};
+  }
+
+  this._locateRooms=function(){
+    this.roomLocations=[];
+    for(let i=0; i<this.rooms.length; i++){
+      this.rooms[i].box=this._locateRoom(i);
+    }
+  }
+
+  /**
+    Searches for rooms that could communicate in a direct way.
+  */
+  this._findPathes=function(){
+
+  }
+
+  /*
+    Returns an array of rooms top or under the given one
+  */
+  this._findRoomsInCol=function(roomIndex){
+    // Define room boundaries
+
+  }
+
+  /*
+    Returns an array of rooms right or left of the given one
+  */
+  this._findRoomsInRow=function(roomIndex){
+
   }
 
   /**
@@ -339,7 +372,7 @@ var MapGen=function(options){
     for(let i=0; i<this.grid.length; i++){
       $(target).append('<div id="'+prefix+'row'+i+'" class="row"></div>');
       for(let j=0; j<this.grid.length; j++){
-        $('#'+prefix+'row'+i).append('<div id="' + prefix + 'cell-'+i+'-'+j+'" class="' + prefix + 'cell ' + prefix + 'cell-'+this.grid[i][j]+' ' + prefix + 'room-'+this.roomsData[i+':'+j]+'"></div>');
+        $('#'+prefix+'row'+i).append('<div id="' + prefix + 'cell-'+i+'-'+j+'" class="' + prefix + 'cell ' + prefix + 'cell-'+this.grid[i][j]+' ' + prefix + 'room-'+this.cellsData[i+':'+j]+'"></div>');
       }
     }
   }

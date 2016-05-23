@@ -30,11 +30,11 @@
     map.createMap();
     /*
     map2.grid=map.grid;
-    map2._findRooms();
+    map2.createRooms();
     map2.jQueryRender('#grid2', 'g2');
     */
-    map._findRooms();
-    map._cleanRooms(50);
+    map.createRooms();
+    map.removeSmallRooms(50);
     map._locateRooms();
     map.jQueryRender('#grid');
     </script>
