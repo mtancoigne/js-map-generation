@@ -1,0 +1,24 @@
+{
+	"mappings": [
+		{
+			"src": "./scss/",
+			"dest": "./demo/"
+	  }
+	],
+
+	"ignores": ["*.css", "*.js", ".git/"],
+
+	"options": {
+		"outputStyle": "normal",
+		"lineComments": false,
+		"debugInfo": false,
+		"strictMath": false,
+		"strictUnits": false,
+		"sourceMap": false,
+    "autoprefix": false
+	},
+
+	"customOptions": [],
+
+	"includePaths": []
+}
