@@ -1,0 +1,60 @@
+/// Demo-related styles
+/// -------------------
+///
+/// You can skip this in your own implementation.
+///
+/// @author Manuel Tancoigne
+/// @license MIT
+
+/*
+  Variables
+*/
+// Document background
+$bg-color:#DDD;
+// Default
+$border-color:darken($bg-color, 10%);
+$pane-bg-color:lighten($bg-color, 5%);
+$log-bg-color: #FFFFEE;
+
+$font-size:12px;
+$font-color:#444;
+
+$radius-sm:3px;
+$radius-lg:5px;
+
+$padding-sm:3px;
+$padding-lg:10px;
+
+$margin-sm:5px;
+$margin-lg:15px;
+
+*{
+  box-sizing: border-box;
+}
+
+body{
+  background-color:$bg-color;
+  font-family: sans-serif;
+  font-size:$font-size;
+  color:$font-color;
+  line-height: $font-size+2*$padding-sm;
+  padding:$padding-lg;
+}
+
+h1{
+  font-size:2em;
+  font-weight:bold;
+}
+small{
+  font-size:0.8em;
+  color: #999;
+}
+
+pre{
+  font-family:monospace;
+}
+
+#grid{
+  border: 1px solid $border-color;
+  background-color: $pane-bg-color;
+}

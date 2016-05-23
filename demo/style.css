@@ -1,0 +1,132 @@
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline; }
+
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
+  display: block; }
+
+body {
+  line-height: 1; }
+
+ol, ul {
+  list-style: none; }
+
+blockquote, q {
+  quotes: none; }
+
+blockquote:before, blockquote:after, q:before, q:after {
+  content: '';
+  content: none; }
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0; }
+
+/*
+  Variables
+*/
+* {
+  box-sizing: border-box; }
+
+body {
+  background-color: #DDD;
+  font-family: sans-serif;
+  font-size: 12px;
+  color: #444;
+  line-height: 18px;
+  padding: 10px; }
+
+h1 {
+  font-size: 2em;
+  font-weight: bold; }
+
+small {
+  font-size: 0.8em;
+  color: #999; }
+
+pre {
+  font-family: monospace; }
+
+#grid {
+  border: 1px solid #c4c4c4;
+  background-color: #eaeaea; }
+
+/*
+  VARIABLES
+*/
+/*
+  CLASSES
+*/
+.map-row {
+  display: table-row; }
+
+/* Cell */
+.map-cell {
+  display: table-cell;
+  width: 7px;
+  border: none; }
+
+.map-cell:after {
+  content: "";
+  display: block;
+  padding-bottom: 100%;
+  border: none; }
+
+/* Specific cells */
+.map-cell-wall {
+  background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAHCAYAAADEUlfTAAAAMElEQVQIW2NkwA18GHHI+TAwMGzBJgmWAGlCl4RLoEvCJDB0ouhgYGCA24kuAXcjAJOJCFSmjFfLAAAAAElFTkSuQmCC);
+  background-size: 100% auto;
+  background-color: #CCC; }
+
+.map-cell-floor {
+  background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAHCAYAAADEUlfTAAAAL0lEQVQIW2NkgAAfKI1CMUIltlBNUpKBgeE5yFhsAC4JcgzITpAAMgDrhElimAAA2UEIVBhnGn4AAAAASUVORK5CYII=);
+  background-size: 100% auto;
+  background-color: #c1ac53; }
+
+.map-cell-enemy {
+  background-color: #FC8888; }
+
+.map-cell-item {
+  background-color: #8888FC; }
+
+.map-cell-boss {
+  background-color: #F00; }
+
+/* Rooms */
+.map-room-0 {
+  background-color: #89d2a5; }
+
+.map-room-1 {
+  background-color: #c5c39a; }
+
+.map-room-2 {
+  background-color: #dbedf7; }
+
+.map-room-3 {
+  background-color: #c9f6d2; }
+
+.map-room-4 {
+  background-color: #73a66c; }
+
+.map-room-5 {
+  background-color: #aaaacf; }
+
+.map-room-6 {
+  background-color: #b7f286; }
+
+.map-room-7 {
+  background-color: #f39ed9; }
+
+.map-room-8 {
+  background-color: #edaada; }
+
+.map-room-9 {
+  background-color: #7670f0; }
+
+.map-room-10 {
+  background-color: #a2b0d3; }

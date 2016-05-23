@@ -1,0 +1,97 @@
+/// Map-related styles
+/// -------------------
+///
+/// You can skip this in your own implementation.
+///
+/// @author Manuel Tancoigne
+/// @license MIT
+
+// Reset
+@import "reset.scss";
+
+@import "demo.scss";
+
+/*
+  VARIABLES
+*/
+/// Number of rooms to be generated. 10 is enough...
+/// @type Integer
+$nb-rooms:10;
+
+/// Prefix for classes
+/// @type string
+$prefix:'map-';
+
+// Some colors, for cells backgrounds
+$playerColor: #44FC44;
+$ennemyColor: #FC8888;
+$bossColor:   #F00;
+$chestColor:  #8888FC;
+$floorColor:  #c1ac53;
+$wallColor:   #CCC;
+
+
+/*
+  CLASSES
+*/
+/// Map row
+.#{$prefix}row{
+  display: table-row;
+}
+
+/* Cell */
+
+// Map cell
+.#{$prefix}cell{
+  display: table-cell;
+  width: 7px;
+  border:none;
+}
+// Maintains the cell square
+.#{$prefix}cell:after{
+  content: "";
+  display: block;
+  padding-bottom: 100%;
+  border:none;
+}
+
+/* Specific cells */
+
+// Walls
+.#{$prefix}cell-wall{
+  background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAHCAYAAADEUlfTAAAAMElEQVQIW2NkwA18GHHI+TAwMGzBJgmWAGlCl4RLoEvCJDB0ouhgYGCA24kuAXcjAJOJCFSmjFfLAAAAAElFTkSuQmCC);
+  background-size: 100% auto;
+  background-color: $wallColor;
+}
+
+// Floor
+.#{$prefix}cell-floor{
+  background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAHCAYAAADEUlfTAAAAL0lEQVQIW2NkgAAfKI1CMUIltlBNUpKBgeE5yFhsAC4JcgzITpAAMgDrhElimAAA2UEIVBhnGn4AAAAASUVORK5CYII=);
+  background-size: 100% auto;
+  background-color: $floorColor;
+}
+
+// Enemy
+.#{$prefix}cell-enemy{
+  background-color: $ennemyColor;
+}
+
+// Item
+.#{$prefix}cell-item{
+  background-color: $chestColor;
+}
+
+// Boss
+.#{$prefix}cell-boss{
+  background-color: $bossColor;
+}
+
+/* Rooms */
+
+// Generating x rooms with random bg.
+@for $i from 0 through $nb-rooms{
+  .#{$prefix}room-#{$i}{
+    // Random starting at 100 to avoid dark bgs
+    background-color: rgb(random(155)+100, random(155)+100, random(155)+100);
+  }
+}
