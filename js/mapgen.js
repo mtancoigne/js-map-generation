@@ -337,26 +337,89 @@ var MapGen=function(options){
     return {xMin:xMin, xMax:xMax, yMin:yMin, yMax:yMax};
   }
 
+  this.createPaths=function(){
+    // Do it for each rooms. Each room should have at least one path to one other.
+    // For each room, find the surrounding rooms
+    for(let i in this.rooms){
+      console.log('');
+      console.log('DOING '+this.rooms[i].id);
+      // Shortcuts
+      let x1=this.rooms[i].box.xMin;
+      let x2=this.rooms[i].box.xMax;
+      let y1=this.rooms[i].box.yMin;
+      let y2=this.rooms[i].box.yMax;
+      for (let j in this.rooms){
+        // Shortcuts
+        let x3=this.rooms[j].box.xMin;
+        let x4=this.rooms[j].box.xMax;
+        let y3=this.rooms[j].box.yMin;
+        let y4=this.rooms[j].box.yMax;
+        // Elegant way avoiding unreadable ifs.
+        let isSameCol=(x4>x1 && x3<x2) || (x3>x1 && x4<x2) || (x3<x2 && x4>x2);
+        let isSameRow=(y4>y1 && y3<y2) || (y3>y1 && y4<y2) || (y3<y2 && y4>y2);
+        let isUp=(y4<y1);
+        let isDown=(y3>y2);
+        let isLeft=(x3>x2);
+        let isRight=(x4<x1);
+
+        // At the right ?
+        if(isRight && isSameRow){
+          console.log('Room '+this.rooms[j].id+' is on the right of room ' +this.rooms[i].id);
+        }
+        // Upper room ?
+        if(isUp && isSameCol){
+          console.log('Room '+this.rooms[j].id+' is on the top of room ' +this.rooms[i].id);
+        }
+        // Bottom room ?
+        if(isDown && isSameCol){
+          console.log('Room '+this.rooms[j].id+' is on the bottom of room ' +this.rooms[i].id);
+        }
+        // At the left ?
+        if(isLeft && isSameCol){
+          console.log('Room '+this.rooms[j].id+' is on the left of room ' +this.rooms[i].id);
+        }
+      }
+    }
+  }
+
+  this._virtuallyPlaceRooms=function(){
+    var xMins=[];
+    var xMaxs=[];
+    var yMins=[];
+    var yMaxs=[];
+    // Creating a "virtual" map
+    var map=[]
+    for (let i=0; i<this.rooms.length; i++){
+      let row=[]
+      for (let j=0; j<this.rooms.length; j++){
+        row.push(null);
+      }
+      map.push(row);
+    }
+    // Get all the coordinates
+    for (i in this.rooms){
+      yMins.push([this.rooms[i].box.yMin, this.rooms[i].id]);
+      yMaxs.push([this.rooms[i].box.yMax, this.rooms[i].id]);
+      xMins.push([this.rooms[i].box.xMin, this.rooms[i].id]);
+      xMaxs.push([this.rooms[i].box.xMax, this.rooms[i].id]);
+    }
+    // Sorting the starts
+    yMins=this._sortPair(yMins, 0);
+    xMins=this._sortPair(xMins, 0);
+  }
+
   /**
-    Searches for rooms that could communicate in a direct way.
+    Sorts an array of arrays of 2 values (ie: `[[1,2], [3,4], [5,6]]`) on the
+    first or second col
+
+    Be carreful, indexes still start at 0
   */
-  this._findPathes=function(){
-
-  }
-
-  /*
-    Returns an array of rooms top or under the given one
-  */
-  this._findRoomsInCol=function(roomIndex){
-    // Define room boundaries
-
-  }
-
-  /*
-    Returns an array of rooms right or left of the given one
-  */
-  this._findRoomsInRow=function(roomIndex){
-
+  this._sortPair=function(arr, dataCol){
+    arr.sort(function(a, b){
+      if (a[dataCol] === b[dataCol]) {return 0;}
+      else {return (a[dataCol] < b[dataCol]) ? -1 : 1;}
+    });
+    return arr;
   }
 
   /**
@@ -390,7 +453,7 @@ var MapGen=function(options){
     for(let i=0; i<this.grid.length; i++){
       $(target).append('<div id="'+prefix+'row'+i+'" class="row"></div>');
       for(let j=0; j<this.grid.length; j++){
-        $('#'+prefix+'row'+i).append('<div id="' + prefix + 'cell-'+i+'-'+j+'" class="' + prefix + 'cell ' + prefix + 'cell-'+this.grid[i][j]+' ' + prefix + 'room-'+this.cellsData[i+':'+j]+'"></div>');
+        $('#'+prefix+'row'+i).append('<div id="' + prefix + 'cell-'+i+'-'+j+'" class="' + prefix + 'cell ' + prefix + 'cell-'+this.grid[i][j]+((this.cellsData[i+':'+j]!=undefined)?' ' + prefix + 'room-'+this.cellsData[i+':'+j]:'')+'"></div>');
       }
     }
   }
