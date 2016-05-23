@@ -10,6 +10,8 @@
 
     <div id="grid"></div>
 
+    <pre id="position">&nbsp;</pre>
+
     <pre>
 [X] - Generating random map
 [X] - Cleaning up the map (isolated 1x1 cells)
@@ -28,11 +30,16 @@
 
     // Generating the map
     var map=new MapGen;
-    //map.createMap();
-    map.createMapFromSample(samples[0]);
+    map.createMap();
+    //map.createMapFromSample(samples[0]);
     map.createRooms();
-    //map.removeSmallRooms(50);
+    map.removeSmallRooms(50);
+    map.createPaths();
     map.jQueryRender('#grid');
+
+    $('.map-cell').hover(function(a){
+      $('#position').text($(this).attr('class'))
+    });
     </script>
   </body>
 </html>

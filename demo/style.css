@@ -56,6 +56,10 @@ pre {
   border: 1px solid #c4c4c4;
   background-color: #eaeaea; }
 
+#position {
+  padding: 10px;
+  font-size: 1.5em; }
+
 /*
   VARIABLES
 */
@@ -99,154 +103,154 @@ pre {
 
 /* Rooms */
 .map-room-0 {
-  background-color: #e986b8; }
+  background-color: #99f79a; }
 
 .map-room-1 {
-  background-color: #c973b8; }
+  background-color: #6eebe5; }
 
 .map-room-2 {
-  background-color: #b897a1; }
+  background-color: #b5bdd6; }
 
 .map-room-3 {
-  background-color: #e2f7df; }
+  background-color: #fde09e; }
 
 .map-room-4 {
-  background-color: #f7dcf2; }
+  background-color: #908f87; }
 
 .map-room-5 {
-  background-color: #b466e5; }
+  background-color: #97ab7f; }
 
 .map-room-6 {
-  background-color: #6ae681; }
+  background-color: #e5ed87; }
 
 .map-room-7 {
-  background-color: #f0abae; }
+  background-color: #6d6bf4; }
 
 .map-room-8 {
-  background-color: #f2e3c7; }
+  background-color: #f8d19d; }
 
 .map-room-9 {
-  background-color: #877d9a; }
+  background-color: #ee7873; }
 
 .map-room-10 {
-  background-color: #a8b8a7; }
+  background-color: #cef565; }
 
 .map-room-11 {
-  background-color: #cd87e5; }
+  background-color: #dce095; }
 
 .map-room-12 {
-  background-color: #fb6bd5; }
+  background-color: #fee3e9; }
 
 .map-room-13 {
-  background-color: #a3bfe8; }
+  background-color: #8872e5; }
 
 .map-room-14 {
-  background-color: #dccd82; }
+  background-color: #e26cd7; }
 
 .map-room-15 {
-  background-color: #7e9a91; }
+  background-color: #7ac6d3; }
 
 .map-room-16 {
-  background-color: #9cd7b3; }
+  background-color: #92a294; }
 
 .map-room-17 {
-  background-color: #fbac8e; }
+  background-color: #c1e2f4; }
 
 .map-room-18 {
-  background-color: #6daad4; }
+  background-color: #c4b895; }
 
 .map-room-19 {
-  background-color: #badbcd; }
+  background-color: #f394a7; }
 
 .map-room-20 {
-  background-color: #7deb67; }
+  background-color: #6fbdb4; }
 
 .map-room-21 {
-  background-color: #eec869; }
+  background-color: #f066d8; }
 
 .map-room-22 {
-  background-color: #96e98a; }
+  background-color: #a4dee1; }
 
 .map-room-23 {
-  background-color: #f88ea5; }
+  background-color: #7f90a1; }
 
 .map-room-24 {
-  background-color: #c5d775; }
+  background-color: #816ad5; }
 
 .map-room-25 {
-  background-color: #f37faf; }
+  background-color: #79cbea; }
 
 .map-room-26 {
-  background-color: #74c9cc; }
+  background-color: #77fe7a; }
 
 .map-room-27 {
-  background-color: #67c39d; }
+  background-color: #f7c8f3; }
 
 .map-room-28 {
-  background-color: #6db5ef; }
+  background-color: #e39fb2; }
 
 .map-room-29 {
-  background-color: #afc77a; }
+  background-color: #d9b581; }
 
 .map-room-30 {
-  background-color: #c88ea5; }
+  background-color: #8dcc8a; }
 
 .map-room-31 {
-  background-color: #ffd9b7; }
+  background-color: #d2f970; }
 
 .map-room-32 {
-  background-color: #949586; }
+  background-color: #d1837f; }
 
 .map-room-33 {
-  background-color: #b6977a; }
+  background-color: #7c9ee6; }
 
 .map-room-34 {
-  background-color: #dbff7c; }
+  background-color: #6eaa6f; }
 
 .map-room-35 {
-  background-color: #cfac66; }
+  background-color: #b09981; }
 
 .map-room-36 {
-  background-color: #79a7f1; }
+  background-color: #939ce0; }
 
 .map-room-37 {
-  background-color: #6a92dc; }
+  background-color: #65a771; }
 
 .map-room-38 {
-  background-color: #70a078; }
+  background-color: #e0d1e4; }
 
 .map-room-39 {
-  background-color: #a9b27a; }
+  background-color: #dac7ba; }
 
 .map-room-40 {
-  background-color: #6883da; }
+  background-color: #8bc3ed; }
 
 .map-room-41 {
-  background-color: #cef88c; }
+  background-color: #8bc6a5; }
 
 .map-room-42 {
-  background-color: #ebc5be; }
+  background-color: #f7a5c5; }
 
 .map-room-43 {
-  background-color: #a0a7ae; }
+  background-color: #67e4af; }
 
 .map-room-44 {
-  background-color: #ed7fa6; }
+  background-color: #efd5df; }
 
 .map-room-45 {
-  background-color: #70cbaf; }
+  background-color: #8abb82; }
 
 .map-room-46 {
-  background-color: #e4bdda; }
+  background-color: #6de072; }
 
 .map-room-47 {
-  background-color: #ad82e1; }
+  background-color: #e9b7d3; }
 
 .map-room-48 {
-  background-color: #9b92f5; }
+  background-color: #a7e4e6; }
 
 .map-room-49 {
-  background-color: #a2d7d6; }
+  background-color: #87a06b; }
 
 .map-room-50 {
-  background-color: #8f92e0; }
+  background-color: #d089d2; }
