@@ -218,6 +218,9 @@ var MapGen=function(options){
             this.cellsData[i+':'+j]=roomId;
             // Fill this room
             this._fillRoom(i, j, roomId);
+            // Determine the bounding box
+            this.rooms[roomId].box=this._getRoomBoundingBox(roomId);
+            // Next
             roomId++;
           }
         }
@@ -316,7 +319,7 @@ var MapGen=function(options){
   /**
     Returns a room place "box"
   */
-  this._locateRoom=function(roomId){
+  this._getRoomBoundingBox=function(roomId){
     var index=this._getRoomIndex(roomId);
     if(index===false){return false;}
     // Init with first cell values, so the base for comparison is already in the room.
@@ -332,13 +335,6 @@ var MapGen=function(options){
       if(this.rooms[index].cells[i][1]<xMin){xMin=this.rooms[index].cells[i][1]}
     }
     return {xMin:xMin, xMax:xMax, yMin:yMin, yMax:yMax};
-  }
-
-  this._locateRooms=function(){
-    this.roomLocations=[];
-    for(let i=0; i<this.rooms.length; i++){
-      this.rooms[i].box=this._locateRoom(i);
-    }
   }
 
   /**
@@ -361,6 +357,28 @@ var MapGen=function(options){
   */
   this._findRoomsInRow=function(roomIndex){
 
+  }
+
+  /**
+    Converts a sample array into a base grid
+    array should be like:
+    [
+      [000],
+      [010],
+      [000]
+    ]
+    where 0 is a wall cell and 1 is a room cell
+  */
+  this.createMapFromSample=function(sample){
+    var out=[];
+    for (let i=0; i<sample.length; i++){
+      var row=[];
+      for (let j=0; j<sample[i].length; j++){
+        row.push((sample[i][j]==='0')?'wall':'floor');
+      }
+      out.push(row);
+    }
+    this.grid=out;
   }
 
   /**

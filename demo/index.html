@@ -23,19 +23,15 @@
 
     <script src="https://code.jquery.com/jquery-1.12.3.min.js" integrity="sha256-aaODHAgvwQW1bFOGXMeX+pC4PZIPsvn2h1sArYOhgXQ=" crossorigin="anonymous"></script>
     <script src="../js/mapgen.js" type="text/javascript"></script>
+    <script src="../js/room_samples.js" type="text/javascript"></script>
     <script>
+
     // Generating the map
     var map=new MapGen;
-    var map2=new MapGen;
-    map.createMap();
-    /*
-    map2.grid=map.grid;
-    map2.createRooms();
-    map2.jQueryRender('#grid2', 'g2');
-    */
+    //map.createMap();
+    map.createMapFromSample(samples[0]);
     map.createRooms();
-    map.removeSmallRooms(50);
-    map._locateRooms();
+    //map.removeSmallRooms(50);
     map.jQueryRender('#grid');
     </script>
   </body>
