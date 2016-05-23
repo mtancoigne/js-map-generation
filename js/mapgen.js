@@ -360,12 +360,12 @@ var MapGen=function(options){
   }
 
   /**
-    Converts a sample array into a base grid
+    Converts a sample array into a base grid.
     array should be like:
     [
-      [000],
-      [010],
-      [000]
+      '000',
+      '010',
+      '000'
     ]
     where 0 is a wall cell and 1 is a room cell
   */
