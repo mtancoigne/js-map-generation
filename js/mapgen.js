@@ -5,6 +5,7 @@ Original idea found here: http://web.archive.org/web/20110825054218/http://prope
 
 @author mtancoigne, 15/05/2016
 @license MIT
+@version 0.1 - Random rooms without pathes.
 
 The object can be created with an object of options as follow:
 {
@@ -334,78 +335,38 @@ var MapGen=function(options){
       if(this.rooms[index].cells[i][1]>xMax){xMax=this.rooms[index].cells[i][1]}
       if(this.rooms[index].cells[i][1]<xMin){xMin=this.rooms[index].cells[i][1]}
     }
-    return {xMin:xMin, xMax:xMax, yMin:yMin, yMax:yMax};
+    return {xMin:xMin, xMax:xMax, yMin:yMin, yMax:yMax, cX:Math.floor((xMax+xMin)/2), cY:Math.floor((yMax+yMin)/2)};
   }
 
-  this.createPaths=function(){
-    // Do it for each rooms. Each room should have at least one path to one other.
-    // For each room, find the surrounding rooms
+  /**
+    Calculates the distances between two rooms centers
+  */
+  this._findPaths=function(){
+    var distances=[];
+    var pathData={};
     for(let i in this.rooms){
-      console.log('');
-      console.log('DOING '+this.rooms[i].id);
       // Shortcuts
-      let x1=this.rooms[i].box.xMin;
-      let x2=this.rooms[i].box.xMax;
-      let y1=this.rooms[i].box.yMin;
-      let y2=this.rooms[i].box.yMax;
+      let iId=this.rooms[i].id;
+      let cx1=this.rooms[i].box.cX;
+      let cy1=this.rooms[i].box.cY;
       for (let j in this.rooms){
-        // Shortcuts
-        let x3=this.rooms[j].box.xMin;
-        let x4=this.rooms[j].box.xMax;
-        let y3=this.rooms[j].box.yMin;
-        let y4=this.rooms[j].box.yMax;
-        // Elegant way avoiding unreadable ifs.
-        let isSameCol=(x4>x1 && x3<x2) || (x3>x1 && x4<x2) || (x3<x2 && x4>x2);
-        let isSameRow=(y4>y1 && y3<y2) || (y3>y1 && y4<y2) || (y3<y2 && y4>y2);
-        let isUp=(y4<y1);
-        let isDown=(y3>y2);
-        let isLeft=(x3>x2);
-        let isRight=(x4<x1);
-
-        // At the right ?
-        if(isRight && isSameRow){
-          console.log('Room '+this.rooms[j].id+' is on the right of room ' +this.rooms[i].id);
+        let jId=this.rooms[j].id;
+        if(pathData[jId]===undefined){
+          pathData[jId]=[];
         }
-        // Upper room ?
-        if(isUp && isSameCol){
-          console.log('Room '+this.rooms[j].id+' is on the top of room ' +this.rooms[i].id);
-        }
-        // Bottom room ?
-        if(isDown && isSameCol){
-          console.log('Room '+this.rooms[j].id+' is on the bottom of room ' +this.rooms[i].id);
-        }
-        // At the left ?
-        if(isLeft && isSameCol){
-          console.log('Room '+this.rooms[j].id+' is on the left of room ' +this.rooms[i].id);
+        if(iId!=jId && pathData[iId].indexOf(jId)===-1){
+          // Shortcuts
+          let cx2=this.rooms[j].box.cX;
+          let cy2=this.rooms[j].box.cY;
+          var distance=Math.sqrt(Math.pow(((cx1>cx2)?cx1-cx2:cx2-cx1), 2)+Math.pow(((cy1>cy2)?cy1-cy2:cy2-cy1),2));
+          distances.push([distance, [iId, jId]]);
+          pathData[jId].push(iId)
         }
       }
     }
-  }
 
-  this._virtuallyPlaceRooms=function(){
-    var xMins=[];
-    var xMaxs=[];
-    var yMins=[];
-    var yMaxs=[];
-    // Creating a "virtual" map
-    var map=[]
-    for (let i=0; i<this.rooms.length; i++){
-      let row=[]
-      for (let j=0; j<this.rooms.length; j++){
-        row.push(null);
-      }
-      map.push(row);
-    }
-    // Get all the coordinates
-    for (i in this.rooms){
-      yMins.push([this.rooms[i].box.yMin, this.rooms[i].id]);
-      yMaxs.push([this.rooms[i].box.yMax, this.rooms[i].id]);
-      xMins.push([this.rooms[i].box.xMin, this.rooms[i].id]);
-      xMaxs.push([this.rooms[i].box.xMax, this.rooms[i].id]);
-    }
-    // Sorting the starts
-    yMins=this._sortPair(yMins, 0);
-    xMins=this._sortPair(xMins, 0);
+    this.distances=distances;
+    this.pathData=pathData;
   }
 
   /**
@@ -456,5 +417,5 @@ var MapGen=function(options){
         $('#'+prefix+'row'+i).append('<div id="' + prefix + 'cell-'+i+'-'+j+'" class="' + prefix + 'cell ' + prefix + 'cell-'+this.grid[i][j]+((this.cellsData[i+':'+j]!=undefined)?' ' + prefix + 'room-'+this.cellsData[i+':'+j]:'')+'"></div>');
       }
     }
-  }
+  }  
 }

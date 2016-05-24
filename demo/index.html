@@ -5,26 +5,35 @@
     <link rel="stylesheet" href="style.css">
   </head>
   <body>
-    <h1>Map generation<small> - work in progress</small></h1>
-    <p>Walls are grey bricks, floor is coloured pavement.</p>
+    <div id="main">
+      <h1>Map generation<small> - work in progress</small></h1>
+      <p>Walls are grey bricks, floor is coloured pavement.</p>
 
-    <div id="grid">
-      <div id="rooms"></div>
-    </div>
+      <div id="grid">
+        <div id="rooms"></div>
+        <!-- Canva for pathes will go here -->
+      </div>
 
-    <button id="toggleRooms">Show/hide rooms overlays</button><code id="position">&nbsp;</code>
+      <div id="menu">
+        <pre class="info">&gt;<span id="position"></span></pre>
+        <button id="toggleRooms">Show/hide rooms bounding boxes</button>
+        <button id="togglePathes">Show/hide pathes</button>
+        <button id="toggleRoomLimits" disabled>Show/hide rooms frontiers</button>
+      </div>
 
 
-    <pre>
-[X] - Generating random map
-[X] - Cleaning up the map (isolated 1x1 cells)
-[X] - Find rooms
-[X] - Extra room cleanup (remove small rooms)
-[X] - Find rooms boundaries
-[ ] - Create pathes between rooms
-[ ] - Place random objects
-[X] - Render the map
+<pre>
+  [X] - Generating random map
+  [X] - Cleaning up the map (isolated 1x1 cells)
+  [X] - Find rooms
+  [X] - Extra room cleanup (remove small rooms)
+  [X] - Find rooms boundaries
+  [X] - Find all possible pathes (from rooms virtual centers)
+  [ ] - Create pathes between rooms
+  [ ] - Place random objects
+  [X] - Render the map
 </pre>
+  </div>
 
     <script src="https://code.jquery.com/jquery-1.12.3.min.js" integrity="sha256-aaODHAgvwQW1bFOGXMeX+pC4PZIPsvn2h1sArYOhgXQ=" crossorigin="anonymous"></script>
     <script src="../js/mapgen.js" type="text/javascript"></script>
@@ -37,21 +46,49 @@
     //map.createMapFromSample(samples[0]);
     map.createRooms();
     map.removeSmallRooms(50);
-    map.createPaths();
+    map._findPaths();
     map.jQueryRender('#grid');
 
-
-    // Rooms overlays... May be included in the class.
+    /*
+      Rooms overlays... May be included in the class later...
+    */
     for(let i in map.rooms){
       $('#rooms').append('<div class="'+map.cssPrefix+'room '+map.cssPrefix+'room-'+map.rooms[i].id+'-overlay" style="top:'+(map.rooms[i].box.yMin*7)
       +'px; left:'+(map.rooms[i].box.xMin*7)
       +'px; width:'+((map.rooms[i].box.xMax-map.rooms[i].box.xMin+1)*7)
       +'px; height:'+((map.rooms[i].box.yMax-map.rooms[i].box.yMin+1)*7)
-      +'px"><h2>'+map.rooms[i].id+'</h2>'+(map.rooms[i].box.yMax-map.rooms[i].box.yMin)+' x '+(map.rooms[i].box.yMax-map.rooms[i].box.yMin)+'</div>')
+      +'px"><h2>'+map.rooms[i].id+'</h2>'+(map.rooms[i].box.xMax-map.rooms[i].box.xMin)+' x '+(map.rooms[i].box.yMax-map.rooms[i].box.yMin)+'<br>C: '+map.rooms[i].box.cX+' x '+map.rooms[i].box.cY+'</div>')
     }
+    $('#grid').prepend('<canvas id="'+map.cssPrefix+'pathes" width="'+(map.grid[0].length*7)+'px" height="'+(map.grid.length*7)+'px"></canvas>');
+
+    /*
+      Drawing all pathes on the overlay. May be included later as a class function.
+    */
+    var cId=map.cssPrefix+'pathes';
+    var c=document.getElementById(cId);
+    var ctx=c.getContext("2d");
+    ctx.lineWidth =2;
+    ctx.strokeStyle = '#096f00';
+    ctx.beginPath();
+    for (let i=0; i<map.distances.length; i++){
+      let idx1=map._getRoomIndex(map.distances[i][1][0]);
+      let idx2=map._getRoomIndex(map.distances[i][1][1])
+      ctx.moveTo((map.rooms[idx1].box.cX*7), (map.rooms[idx1].box.cY*7));
+      ctx.lineTo((map.rooms[idx2].box.cX*7), (map.rooms[idx2].box.cY*7));
+    }
+    ctx.closePath();
+    ctx.stroke();
+
+    /**
+      jQuery stuff to handle events
+    */
     $('#rooms').hide();
+    $('#'+cId).hide();
     $('#toggleRooms').click(function(){
       $('#rooms').toggle();
+    })
+    $('#togglePathes').click(function(){
+      $('#'+cId).toggle();
     })
 
     $('.map-cell').hover(function(a){
