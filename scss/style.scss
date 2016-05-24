@@ -90,8 +90,33 @@ $wallColor:   #CCC;
 
 // Generating x rooms with random bg.
 @for $i from 0 through $nb-rooms{
+  // Random starting at 100 to avoid dark bgs
+  $red:random(155)+100;
+  $green:random(155)+100;
+  $blue:random(155)+100;
   .#{$prefix}room-#{$i}{
-    // Random starting at 100 to avoid dark bgs
-    background-color: rgb(random(155)+100, random(155)+100, random(155)+100);
+    background-color: rgb($red, $green, $blue);
+  }
+
+  // Overlays styles. Remove them if you don't use them.
+  .#{$prefix}room-#{$i}-overlay{
+    $color:rgb($red, $green, $blue);
+    background-color: rgba($red, $green, $blue, 0.5);
+    color: darken($color, 20%);
+    border:1px solid darken($color, 20%);;
+  }
+}
+
+// Overlays. The #room is defined in _demo.scss as not really part of this...
+.#{$prefix}room{
+  position:absolute;
+  text-shadow:
+    -1px -1px 0 #FFF,
+    1px -1px 0 #FFF,
+    -1px 1px 0 #FFF,
+    1px 1px 0 #FFF;
+  h2{
+    font-size:1.5em;
+    font-weight:bold;
   }
 }

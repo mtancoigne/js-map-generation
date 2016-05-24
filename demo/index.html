@@ -8,9 +8,12 @@
     <h1>Map generation<small> - work in progress</small></h1>
     <p>Walls are grey bricks, floor is coloured pavement.</p>
 
-    <div id="grid"></div>
+    <div id="grid">
+      <div id="rooms"></div>
+    </div>
 
-    <pre id="position">&nbsp;</pre>
+    <button id="toggleRooms">Show/hide rooms overlays</button><code id="position">&nbsp;</code>
+
 
     <pre>
 [X] - Generating random map
@@ -36,6 +39,20 @@
     map.removeSmallRooms(50);
     map.createPaths();
     map.jQueryRender('#grid');
+
+
+    // Rooms overlays... May be included in the class.
+    for(let i in map.rooms){
+      $('#rooms').append('<div class="'+map.cssPrefix+'room '+map.cssPrefix+'room-'+map.rooms[i].id+'-overlay" style="top:'+(map.rooms[i].box.yMin*7)
+      +'px; left:'+(map.rooms[i].box.xMin*7)
+      +'px; width:'+((map.rooms[i].box.xMax-map.rooms[i].box.xMin+1)*7)
+      +'px; height:'+((map.rooms[i].box.yMax-map.rooms[i].box.yMin+1)*7)
+      +'px"><h2>'+map.rooms[i].id+'</h2>'+(map.rooms[i].box.yMax-map.rooms[i].box.yMin)+' x '+(map.rooms[i].box.yMax-map.rooms[i].box.yMin)+'</div>')
+    }
+    $('#rooms').hide();
+    $('#toggleRooms').click(function(){
+      $('#rooms').toggle();
+    })
 
     $('.map-cell').hover(function(a){
       $('#position').text($(this).attr('class'))
