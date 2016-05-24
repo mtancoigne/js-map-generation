@@ -108,7 +108,7 @@ $wallColor:   #CCC;
 }
 
 // Overlays. The #room is defined in _demo.scss as not really part of this...
-.#{$prefix}room{
+.#{$prefix}room, ##{$prefix}pathes{
   position:absolute;
   text-shadow:
     -1px -1px 0 #FFF,

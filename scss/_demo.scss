@@ -52,15 +52,49 @@ small{
 
 pre{
   font-family:monospace;
+  &.info{
+    border-bottom:$padding-sm solid $border-color;
+    font-size:1.5em;
+    margin-bottom:$margin-sm;
+    color:darken($font-color, 10%);
+  }
 }
 
-#grid{
+button{
+  background-color: lighten($border-color, 5%);
+  border:1px solid  $border-color;
+  border-radius: $radius-sm;
+  padding:$padding-sm $padding-lg;
+  border-bottom-width:$radius-sm;
+  &:hover{
+    background-color:lighten($border-color, 15%);
+  }
+  .active{
+    top:$radius-sm;
+    border-top:$radius-sm;
+    border-bottom-width: 1px;
+    background-color:lighten($border-color, 10%);
+  }
+}
+#main{
+  width:(560+2+2*$padding-lg);
+  margin-left:50%;
+  transform: translateX(-50%);
+  @media(max-width:(560+2+2*$padding-lg)){
+    transform: none;
+    margin-left: 0px;
+  }
+}
+
+#grid, #menu{
+  margin-bottom:$margin-lg;
   border: 1px solid $border-color;
   background-color: $pane-bg-color;
+  padding: $padding-lg;
 }
 #position{
   padding:$padding-lg;
-  font-size:1.5em;
+  color:$font-color;
 }
 // Room overlay
 #rooms{
