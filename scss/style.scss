@@ -22,11 +22,15 @@ $nb-rooms:50;
 /// @type string
 $prefix:'map-';
 
+/// Cell size
+/// @type length
+$cell-size:7px;
+
 // Some colors, for cells backgrounds
-$playerColor: #44FC44;
-$ennemyColor: #FC8888;
-$bossColor:   #F00;
-$chestColor:  #8888FC;
+$playerColor: #44FC44; // Not used for now
+$ennemyColor: #FC8888; // Not used for now
+$bossColor:   #F00;    // Not used for now
+$chestColor:  #8888FC; // Not used for now
 $floorColor:  #c1ac53;
 $wallColor:   #CCC;
 
@@ -44,7 +48,7 @@ $wallColor:   #CCC;
 // Map cell
 .#{$prefix}cell{
   display: table-cell;
-  width: 7px;
+  width: $cell-size;
   border:none;
 }
 // Maintains the cell square
