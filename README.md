@@ -11,6 +11,7 @@ This is a work in progress around map generation and [this article](http://web.a
   - [ ] Creating pathes between rooms
   - [ ] Place random objects
   - [x] Render with jQuery
+
 ## Demo
 For now, there is a [codepen](http://codepen.io/mtancoigne/pen/mPZeRQ) as a demo. It may be out of sync, but i'll try to keep it up...
 
@@ -26,6 +27,7 @@ The map generator creates arrays of data and functions to work with. The _map_ i
   ['wall', 'wall',  'wall', 'wall',  'wall']
 ]
 ```
+
 At this stage, there are floors and walls, but any _cell_ type should be handled in the future.
 
 
@@ -52,8 +54,10 @@ To include the generator in a webpage, simply load the script `js/mapgen.js` and
   map.jQueryRender('#destination');
 </script>
 ```
+
 #### MapGen options
 The class can be created with optionnal options. If you don't use one, a default value will be used.
+
 ```js
 // Options and their default values
 var options={
@@ -120,9 +124,11 @@ function(x, y, passes, cleanLevel, wallPercent, sameSubCellPercent){}
 */
 this.createMapFromSample=function(sample){}
 ```
+
 Some samples are present in `js/room_samples.js`. This method is meant to replace `createMap()`. You should not use `removeSmallRooms()` too, as it will modify your sample.
 
 A typical use will be:
+
 ```js
 var sample = [] // The sample
 
@@ -133,6 +139,7 @@ map.createRooms();
 ```
 
 ### createRooms
+
 ```js
 /**
   Finds all the rooms in the map and fills this.rooms and this.cellsData.
@@ -141,6 +148,7 @@ this.createRooms=function(){}
 ```
 
 ### removeSmallRooms
+
 ```js
 /**
   Remove really small rooms
@@ -148,9 +156,11 @@ this.createRooms=function(){}
 */
 this.removeSmallRooms=function(minSize){}
 ```
+
 This must be called after `createRooms()`.
 
 ### jQueryRender
+
 ```js
 /**
   Renders the map using jquery in the given target.
@@ -165,6 +175,7 @@ this.jQueryRender=function(target, prefix){}
 
 ### grid
 It's an array representing rows and cells like :
+
 ```js
 var grid=[
   ['wall', 'wall',  'wall',  'wall',  'wall'], // Row 1
@@ -174,10 +185,12 @@ var grid=[
   ['wall', 'wall',  'wall',  'wall',  'wall'], // Row 5
 ]
 ```
+
 For now, there are two types of cells, but this should be extendable in the future.
 
 ### rooms
 It's the list of rooms created by `createRooms`.
+
 ```js
 var rooms=[
   {
@@ -210,6 +223,7 @@ var rooms=[
 
 ### cellsData
 List of cells and their corresponding Id. This is created by `createRooms`.
+
 ```js
 var cellsData={
   "1:34":0,
