@@ -7,6 +7,8 @@ Original idea found here: http://web.archive.org/web/20110825054218/http://prope
 @license MIT
 @version 0.1 - Random rooms without pathes.
 
+@constructor
+
 The object can be created with an object of options as follow:
 {
   // Base map width
@@ -65,10 +67,10 @@ var MapGen=function(options){
 
   /**
     Returns the current cell type, or a WALL if outside of the map.
-    @var x int Current row
-    @var y int Current col
+    @param x int - Current row
+    @param y int - Current col
   */
-  this._getCellType=function(x,y){
+  this._getCellType=function(x, y){
     if(x>=0 && y>=0 && x<this.grid.length && y<this.grid.length){
       return this.grid[x][y];
     }else{
@@ -78,8 +80,8 @@ var MapGen=function(options){
 
   /**
     Count direct neighbours of the same type
-    @var x int Current row
-    @var y int Current col
+    @param x int - Current row
+    @param y int - Current col
   */
   this._getCellSameDirectNeighbours=function(x, y){
     var currentType=this._getCellType(x, y);
@@ -96,8 +98,10 @@ var MapGen=function(options){
 
  /**
    Returns the dominant type of surrounding cells.
+   @param x int - Current row
+   @param y int - Current col
  */
- this._getCellMoreDirectNeighboursType=function (x,y){
+ this._getCellMoreDirectNeighboursType=function (x, y){
    var types={};
    var cellsToCheck=[[x-1, y-1], [x-1,y], [x-1, y+1], [x,y-1], [x,y], [x, y+1], [x+1, y-1], [x+1, y], [x+1,y+1]];
    for(let i=0; i<cellsToCheck.length; i++){
@@ -124,15 +128,18 @@ var MapGen=function(options){
  }
 
   /**
-    Creates a map of size base*(passes^2)
-    @var int x           Base width of the map
-    @var int y           Base height of the map
-    @var int passes      Number of passes for map refinement
-    @var int cleanLevel  Whether or not clean the map (remove lonely cells)
-                         Value from 0 to 5, 0 being no cleanup and 5 the max.
-    @var int wallPercent        Wall/floor ratio
-    @var int sameSubCellPercent Chances for a cell to be of its predecessor type,
-                                while subdivising the map
+    Creates a map of size base*(passes^2).
+    Calling this function with no params will use the defaults values.
+
+    Note that if you want to skip a specific param in the list, you should make it `undefined`
+    (ie: `createMap(5,5,4, undefined, 2,5)` Note that the last param was omited)
+
+    @param int x - Base width of the map
+    @param int y - Base height of the map
+    @param int passes - Number of passes for map refinement
+    @param int cleanLevel - Whether or not clean the map (remove lonely cells. Value from 0 to 5, 0 being no cleanup and 5 the max.
+    @param int wallPercent - Wall/floor ratio
+    @param int sameSubCellPercent - Chances for a cell to be of its predecessor type, while subdivising the map
   */
   this.createMap=function(x, y, passes, cleanLevel, wallPercent, sameSubCellPercent){
     // Arguments:
@@ -202,7 +209,7 @@ var MapGen=function(options){
   }
 
   /**
-    Finds all the rooms in the map
+    Finds all the rooms in the map and fills this.rooms and this.cellsData.
   */
   this.createRooms=function(){
     var roomId=0; // Number of rooms
@@ -233,6 +240,8 @@ var MapGen=function(options){
   /**
     Check if the given cell is already registered in a room.
     If true, returns the room number.
+    @param x int - Current row
+    @param y int - Current col
   */
   this._isInARoom=function(x, y){
     if(this.cellsData[x+':'+y]!=undefined){
@@ -242,7 +251,8 @@ var MapGen=function(options){
   }
 
   /**
-    Returns the index of the given room in the rooms list or false if not found.
+    Returns the index of the given room in this.rooms or false if not found.
+    @param int roomId - Id of the targeted room
   */
   this._getRoomIndex=function(roomId){
     for(let i=0; i<this.rooms.length; i++){
@@ -253,26 +263,30 @@ var MapGen=function(options){
     return false;
   }
 
-  /*
+  /**
     Find all the cells in a room.
-    x and y are the starting point.
+    @param x int - X position of the starting point
+    @param y int - Y position of the starting point
+    @param roomId - Room id
   */
-  this._fillRoom=function(x,y, index){
+  this._fillRoom=function(x,y, roomId){
     var cells=this._getSameCellsAround(x, y);
     for(let i=0; i<cells.length; i++){
       // New cell ?
       if(this._isInARoom(cells[i][0], cells[i][1])===false){
         // Adding to list
-        this.rooms[this._getRoomIndex(index)].cells.push(cells[i]);
-        this.cellsData[cells[i][0]+':'+cells[i][1]]=index;
+        this.rooms[this._getRoomIndex(roomId)].cells.push(cells[i]);
+        this.cellsData[cells[i][0]+':'+cells[i][1]]=roomId;
         // Continue the filling
-        this._fillRoom(cells[i][0], cells[i][1], index);
+        this._fillRoom(cells[i][0], cells[i][1], roomId);
       }
     }
   }
 
-  /*
+  /**
     Returns the cells of the same type, directly adjacent to a given cell.
+    @param x int - Current row
+    @param y int - Current col
   */
   this._getSameCellsAround=function (x,y){
     var type=this.grid[x][y];
@@ -289,6 +303,7 @@ var MapGen=function(options){
 
   /**
     Remove really small rooms
+    @param int minSize - Minimum size for a room to be kept.
   */
   this.removeSmallRooms=function(minSize){
     // Purge small rooms and convert them to walls
@@ -318,7 +333,8 @@ var MapGen=function(options){
   }
 
   /**
-    Returns a room place "box"
+    Returns a room's bounding box
+    @param int roomId - Room id
   */
   this._getRoomBoundingBox=function(roomId){
     var index=this._getRoomIndex(roomId);
@@ -340,6 +356,7 @@ var MapGen=function(options){
 
   /**
     Calculates the distances between two rooms centers
+    WORK IN PROGRESS...
   */
   this._findPaths=function(){
     var distances=[];
@@ -374,6 +391,8 @@ var MapGen=function(options){
     first or second col
 
     Be carreful, indexes still start at 0
+    @param array arr - Array to sort
+    @param int dataCol - Index of order.
   */
   this._sortPair=function(arr, dataCol){
     arr.sort(function(a, b){
@@ -392,6 +411,7 @@ var MapGen=function(options){
       '000'
     ]
     where 0 is a wall cell and 1 is a room cell
+    @param array sample - Sample data
   */
   this.createMapFromSample=function(sample){
     var out=[];
@@ -406,8 +426,10 @@ var MapGen=function(options){
   }
 
   /**
-  Renders the map using jquery in the given target.
-  The rendered lines/cells can have a prefixed id.
+    Renders the map using jquery in the given target.
+    The rendered lines/cells can have a prefixed id.
+    @param string target - Target id, with the # for jQuery.
+    @param string prefix - Prefix for css classes. Default is `map-`
   */
   this.jQueryRender=function(target, prefix){
     if(prefix===undefined){prefix=this.cssPrefix};
@@ -417,5 +439,5 @@ var MapGen=function(options){
         $('#'+prefix+'row'+i).append('<div id="' + prefix + 'cell-'+i+'-'+j+'" class="' + prefix + 'cell ' + prefix + 'cell-'+this.grid[i][j]+((this.cellsData[i+':'+j]!=undefined)?' ' + prefix + 'room-'+this.cellsData[i+':'+j]:'')+'"></div>');
       }
     }
-  }  
+  }
 }
