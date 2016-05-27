@@ -22,8 +22,8 @@ MapGen.prototype.createMap=function(xLength, yLength, passes, cleanLevel, wallPe
   if(sameSubCellPercent===undefined){sameSubCellPercent=this.sameSubCellPercent}
 
   // Buildable cell types:
-  alternateCellTypes=this._getBuildableTypes(true);
-  allCellTypes=this._getBuildableTypes(false);
+  var alternateCellTypes=this._getBuildableTypes(true);
+  var allCellTypes=this._getBuildableTypes(false);
 
   /*
   First pass
@@ -211,7 +211,7 @@ MapGen.prototype.createMapFromSample=function(sample){
 
 MapGen.prototype.addItems=function(itemsToCreate, avoidDeadlyAreas){
   //List cells
-  cells=this._getWalkableCells(avoidDeadlyAreas);
+  var cells=this._getWalkableCells(avoidDeadlyAreas);
   // placing items
   for(let i in itemsToCreate){
     do{
