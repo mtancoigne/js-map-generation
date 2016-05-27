@@ -72,10 +72,10 @@ button .active {
   background-color: #dddddd; }
 
 #main {
-  width: 582px;
+  width: 1142px;
   margin-left: 50%;
   transform: translateX(-50%); }
-@media (max-width: 582px) {
+@media (max-width: 1142px) {
   #main {
     transform: none;
     margin-left: 0px; } }
@@ -108,7 +108,7 @@ button .active {
 /* Cell */
 .map-cell {
   display: table-cell;
-  width: 7px;
+  width: 14px;
   border: none; }
 
 .map-cell:after {
@@ -119,432 +119,450 @@ button .active {
 
 /* Specific cells */
 .map-cell-wall {
-  background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAHCAYAAADEUlfTAAAAMElEQVQIW2NkwA18GHHI+TAwMGzBJgmWAGlCl4RLoEvCJDB0ouhgYGCA24kuAXcjAJOJCFSmjFfLAAAAAElFTkSuQmCC);
+  background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAOCAYAAAAfSC3RAAAAnUlEQVQokY1SuxLDIAxTOW8MjMwZkp/qh7Tf2g6ZGRnYfNcMLa1NHKdaeJxlIZnL7X594QMuDQCwVsa8JHgII8kClwYuDc9H1URJkmpes3BEAgDKUa1Toq8q9UsAmLNrSzUmv/QHylE1DlaRFcaIXTheIDui9Cn3Hv72KF+zVn6Pw/IyjkZamBLZimOCFsLZv+xKlKPO4uwzj2H18waURVCVLdhS4wAAAABJRU5ErkJggg==");
   background-size: 100% auto;
   background-color: #CCC; }
 
 .map-cell-floor {
-  background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAHCAYAAADEUlfTAAAAL0lEQVQIW2NkgAAfKI1CMUIltlBNUpKBgeE5yFhsAC4JcgzITpAAMgDrhElimAAA2UEIVBhnGn4AAAAASUVORK5CYII=);
-  background-size: 100% auto;
+  background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAHCAYAAADEUlfTAAAAL0lEQVQIW2NkgAAfKI1CMUIltlBNUpKBgeE5yFhsAC4JcgzITpAAMgDrhElimAAA2UEIVBhnGn4AAAAASUVORK5CYII=");
+  background-size: 50% auto;
   background-color: #c1ac53; }
 
-.map-cell-enemy {
-  background-color: #FC8888; }
+.map-cell-water {
+  /*background-image:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAHCAYAAADEUlfTAAAAMElEQVQIW2NkwAMYoXLGUPosMh8kCZJAEYTxYTqxGg6SlITKPIfScD6yTgxFeI0FAHc5BlSOgEKdAAAAAElFTkSuQmCC);*/
+  background-image: url("data:image/gif;base64,R0lGODdhDgAOAKIAAAAAADJubnevtsbZ6MHH33yZuwAAAAAAACH/C05FVFNDQVBFMi4wAwEAAAAh+QQJHgAAACwAAAAADgAOAAADKyi63BJhwPAkhWOQLHWOGiGKITkypyA6UcNN2faV3DiGqo2uTu//wKCwlwAAIfkECR4AAAAsAAAAAA4ADgAAAysoutwaYcAg4oRjkCw1z0QoamLJiMrmRM0mYV4WjWC5Eam5oE7v/8Cg0JEAACH5BAkeAAAALAAAAAAOAA4AAAMrKLrMsSGM+KSNY5A8tc9EKGpiyYjL0AgS81EgF5RcGWqKfRJr7//AoLCXAAAh+QQJHgAAACwAAAAADgAOAAADKyi63BphwCDihGOQLDXPRChqYsmIyuZEzSZhXhaNYLkRqbmgTu//wKDQkQAAOw==");
+  background-size: 100% auto;
+  background-color: #1d67f9 !important; }
 
-.map-cell-item {
-  background-color: #8888FC; }
+.map-cell-lava {
+  background-image: url("data:image/gif;base64,R0lGODdhDgAOACcAACH/C05FVFNDQVBFMi4wAwEAAAAh+QQJHgAAACwAAAAADgAOAIIAAAC2dwBuMjLoWADBxwBuMgC2WAAAAAADMBi63CFiQPEkhWOQLHWOGiGKITkyZyA6UcNN2faV3DiGqo2uTu8vBUMj2BAWf8hGAgAh+QQJHgAAACwAAAAADgAOAIIAAAC2dwBuMjLoWADBxwBuMgC2WAAAAAADMBi63CpiQBHihGOQLDXPRChqYsmIyuZEzSZhXhaNYLkRqbmgTu8rBUMj2BAWf8hGAgAh+QQJHgAAACwAAAAADgAOAIIAAAC2dwBuMjLoWADBxwBuMgC2WAAAAAADMBi6zLJCjPikjWOQPLXPRChqYsmIy9AEEvNRICeUXBlqin0Sa+8vBUMj2BAWf8hGAgAh+QQJHgAAACwAAAAADgAOAIIAAAC2dwBuMjLoWADBxwBuMgC2WAAAAAADMBi63CpiQBHihGOQLDXPRChqYsmIyuZEzSZhXhaNYLkRqbmgTu8rBUMj2BAWf8hGAgA7");
+  background-size: 100% auto;
+  background-color: #f9d51d !important; }
 
-.map-cell-boss {
-  background-color: #F00; }
+.map-cell-item-ennemy:after {
+  background-size: 100% auto;
+  background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAOCAQAAAC1QeVaAAAAeUlEQVQYlX2Q0Q3DMAgFD6tzdCxL2SNjOHNEolt5kdePkgasqucfi0PPBgMAiS9mZCTK2bQolyQNedar8qQbgNM5ePEEoDMis13hOzPUTUhPpfv+qKVZ2lqO6tGwr1O6JJc00igNzARMjMlnORunld/+4q+MVyvXbt9QxF+28/K7hAAAAABJRU5ErkJggg=="); }
+
+.map-cell-item-chest:after {
+  background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAOCAYAAAAfSC3RAAAAw0lEQVQokWNgIBMwovH/E6seWeP/NEtDBgYGBoapO1kZst1/Y7BnHT8P1wPT+L8/zJqBgYGBIWfOb4YpKawYVl1//I1BU5aLoXDVUQYGBgZGFmQJhOm/MTRC5L5huPm/koIJAe9BwL0HZxgYGBgYmWACLpJ/GW5eYmJwkfzLwMDAwLC9wYhhe4MRVjkGBgYGJhTT1hkQZSsDAwMDCzZBF8m/DJ4N5+BshKGnsduoFHQBRTOy05DlKHIqPFSJ1oGqj44AAG86PtaEiWBfAAAAAElFTkSuQmCC"); }
+
+.map-cell-item-health:after {
+  background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAOCAYAAAAfSC3RAAAAnklEQVQokcWRsQ6CMBRFD8YQQxgKLh0hfoGjf+DnMrowOzLKD5jg1sFoQkjKVFPbp4ycrS/3pPflwao0ZW2bsrZLM4CtH8jPJwC6dmePj1sizVw+cdJUFQCkSpFpzfNyZaoKUqUAyLRm33Y4eRNWGI3hNQy4n0ZjxLUi0YVN33+9Qz6d/boSh/ubaMclOZQiUZIlSRR9+Zf0F+no6zIDbk1Pu03MjqgAAAAASUVORK5CYII="); }
+
+.map-cell-item-boss:after {
+  background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAOCAYAAAAfSC3RAAAAuklEQVQokZ2SsQ3EIAxFv6NrMkKaG4CWNdJeJskYySJcmzVoKSloMoJLX3EJB4TkpHwJ2cZ+2BImJBIRwYmIiLI4hYpclc+cFDJa49V1AIDZezzbFoO1B5j+QbtKuNk9ozUGazF7j/e6HqBJqWzmBoVG5xCYzzrVQaN1tah2/7gqCsynj8WO5UhpHJgxOnekt48XAGK0Fun7aCelYm47v45ERPvSBGbQskRbiDLwjm6D2a5eFn63K9Z/AKl/YS7wMRjiAAAAAElFTkSuQmCC"); }
+
+.map-cell-item-player:after {
+  background: url("data:image/gif;base64,R0lGODdhDgAOAHcAACH/C05FVFNDQVBFMi4wAwEAAAAh+QQJCgAAACwAAAAADgAOAIMAAAAiIDRFKDysMjJmOTGpdVDGclCEnkO2n1eNa1FgWJgAAAAAAAAAAAAAAAAAAAAETxBIGaa9QIgxwKhUNhDkoFkmMRaFMRwCSqrEgXDTVmoHUagVAU0QSAh/Mc+MmCqYAIHRQKHYjFRJz/S6k3QECm4JNzFJTTEQtIPuYDAgdwQAIfkECQoAAAAsAAAAAA4ADgCDAAAAIiA0rDIyRSg8ZjkxYFiYqXVQxnJQjWtRhJ5DAAAAAAAAAAAAAAAAAAAAAAAABE8QSBmmnUIKMQYQFQUMAmFuXvYJxWYchulNZFGYhLFhJduVsUFlgBMiSEEJ6QQixjKBzamTSGxUIxzOOlNKcYIEycL5cgAhdKYzvrjRGkkEACH5BAkKAAAALAAAAAAOAA4AgwAAACIgNKwyMkUoPGY5Mal1UGBYmKeCe8ZyUI1rUYSeQwAAAAAAAAAAAAAAAAAAAARQEEgZpp1CijGyqBTACQKxZYBHEkThCsZgdSwrHOREm5thIKbKrpMYtEwSI2sQCBiBskCJpRjZZBqBQmGqoZKKlY3Q0Yh2puhEmtpgL/DKNwIAIfkECQoAAAAsAAAAAA4ADgCDAAAAIiA0rDIyRSg8ZjkxhJ5DqXVQxnJQYFiYAAAAAAAAAAAAAAAAAAAAAAAAAAAABE8QSBmmvUCMnSsFg0AQgiZIp1aIRlsOVliMo0HAaFkUG1tWotEgcPDhBiNNIIC0wZg0zQAhKk1KNAKCipMgkyQB9TQJBUnPSeDUI1vc6ksEADs="); }
 
 /* Rooms */
-.map-room-0 {
-  background-color: #b5b4de; }
+.map-cell-room-0 {
+  background-color: #978272; }
 
 .map-room-0-overlay {
-  background-color: rgba(181, 180, 222, 0.5);
-  color: #6f6dbf;
-  border: 1px solid #6f6dbf; }
+  background-color: rgba(151, 130, 114, 0.5);
+  color: #5e5045;
+  border: 1px solid #5e5045; }
 
-.map-room-1 {
-  background-color: #ef73ca; }
+.map-cell-room-1 {
+  background-color: #b272e7; }
 
 .map-room-1-overlay {
-  background-color: rgba(239, 115, 202, 0.5);
-  color: #e21aa6;
-  border: 1px solid #e21aa6; }
+  background-color: rgba(178, 114, 231, 0.5);
+  color: #8223d0;
+  border: 1px solid #8223d0; }
 
-.map-room-2 {
-  background-color: #90d488; }
+.map-cell-room-2 {
+  background-color: #ab9df9; }
 
 .map-room-2-overlay {
-  background-color: rgba(144, 212, 136, 0.5);
-  color: #4db541;
-  border: 1px solid #4db541; }
+  background-color: rgba(171, 157, 249, 0.5);
+  color: #593df3;
+  border: 1px solid #593df3; }
 
-.map-room-3 {
-  background-color: #c4c8d1; }
+.map-cell-room-3 {
+  background-color: #fd84d1; }
 
 .map-room-3-overlay {
-  background-color: rgba(196, 200, 209, 0.5);
-  color: #8b93a4;
-  border: 1px solid #8b93a4; }
+  background-color: rgba(253, 132, 209, 0.5);
+  color: #fb20ab;
+  border: 1px solid #fb20ab; }
 
-.map-room-4 {
-  background-color: #a479a9; }
+.map-cell-room-4 {
+  background-color: #be7476; }
 
 .map-room-4-overlay {
-  background-color: rgba(164, 121, 169, 0.5);
-  color: #6e4973;
-  border: 1px solid #6e4973; }
+  background-color: rgba(190, 116, 118, 0.5);
+  color: #8b4143;
+  border: 1px solid #8b4143; }
 
-.map-room-5 {
-  background-color: #efdf73; }
+.map-cell-room-5 {
+  background-color: #cee2e4; }
 
 .map-room-5-overlay {
-  background-color: rgba(239, 223, 115, 0.5);
-  color: #e2c81a;
-  border: 1px solid #e2c81a; }
+  background-color: rgba(206, 226, 228, 0.5);
+  color: #8cbbc0;
+  border: 1px solid #8cbbc0; }
 
-.map-room-6 {
-  background-color: #d999db; }
+.map-cell-room-6 {
+  background-color: #ed94c2; }
 
 .map-room-6-overlay {
-  background-color: rgba(217, 153, 219, 0.5);
-  color: #bd4ec0;
-  border: 1px solid #bd4ec0; }
+  background-color: rgba(237, 148, 194, 0.5);
+  color: #de3d90;
+  border: 1px solid #de3d90; }
 
-.map-room-7 {
-  background-color: #d071d5; }
+.map-cell-room-7 {
+  background-color: #fbc487; }
 
 .map-room-7-overlay {
-  background-color: rgba(208, 113, 213, 0.5);
-  color: #a733ad;
-  border: 1px solid #a733ad; }
+  background-color: rgba(251, 196, 135, 0.5);
+  color: #f89324;
+  border: 1px solid #f89324; }
 
-.map-room-8 {
-  background-color: #fadaea; }
+.map-cell-room-8 {
+  background-color: #70c5af; }
 
 .map-room-8-overlay {
-  background-color: rgba(250, 218, 234, 0.5);
-  color: #ee80b7;
-  border: 1px solid #ee80b7; }
+  background-color: rgba(112, 197, 175, 0.5);
+  color: #3c937d;
+  border: 1px solid #3c937d; }
 
-.map-room-9 {
-  background-color: #ce897d; }
+.map-cell-room-9 {
+  background-color: #9a67aa; }
 
 .map-room-9-overlay {
-  background-color: rgba(206, 137, 125, 0.5);
-  color: #a64e3f;
-  border: 1px solid #a64e3f; }
+  background-color: rgba(154, 103, 170, 0.5);
+  color: #623d6e;
+  border: 1px solid #623d6e; }
 
-.map-room-10 {
-  background-color: #8fe6cc; }
+.map-cell-room-10 {
+  background-color: #d9f6cf; }
 
 .map-room-10-overlay {
-  background-color: rgba(143, 230, 204, 0.5);
-  color: #3cd3a6;
-  border: 1px solid #3cd3a6; }
+  background-color: rgba(217, 246, 207, 0.5);
+  color: #95e679;
+  border: 1px solid #95e679; }
 
-.map-room-11 {
-  background-color: #abdfa8; }
+.map-cell-room-11 {
+  background-color: #ffcd65; }
 
 .map-room-11-overlay {
-  background-color: rgba(171, 223, 168, 0.5);
-  color: #63c45d;
-  border: 1px solid #63c45d; }
+  background-color: rgba(255, 205, 101, 0.5);
+  color: #feac00;
+  border: 1px solid #feac00; }
 
-.map-room-12 {
-  background-color: #926d80; }
+.map-cell-room-12 {
+  background-color: #ffed98; }
 
 .map-room-12-overlay {
-  background-color: rgba(146, 109, 128, 0.5);
-  color: #58414d;
-  border: 1px solid #58414d; }
+  background-color: rgba(255, 237, 152, 0.5);
+  color: #ffdb32;
+  border: 1px solid #ffdb32; }
 
-.map-room-13 {
-  background-color: #7377c4; }
+.map-cell-room-13 {
+  background-color: #c0bcf3; }
 
 .map-room-13-overlay {
-  background-color: rgba(115, 119, 196, 0.5);
-  color: #3e4293;
-  border: 1px solid #3e4293; }
+  background-color: rgba(192, 188, 243, 0.5);
+  color: #6f65e4;
+  border: 1px solid #6f65e4; }
 
-.map-room-14 {
-  background-color: #f68293; }
+.map-cell-room-14 {
+  background-color: #97d68f; }
 
 .map-room-14-overlay {
-  background-color: rgba(246, 130, 147, 0.5);
-  color: #ef2341;
-  border: 1px solid #ef2341; }
+  background-color: rgba(151, 214, 143, 0.5);
+  color: #52bb44;
+  border: 1px solid #52bb44; }
 
-.map-room-15 {
-  background-color: #777af4; }
+.map-cell-room-15 {
+  background-color: #69daab; }
 
 .map-room-15-overlay {
-  background-color: rgba(119, 122, 244, 0.5);
-  color: #191eec;
-  border: 1px solid #191eec; }
+  background-color: rgba(105, 218, 171, 0.5);
+  color: #2cb17a;
+  border: 1px solid #2cb17a; }
 
-.map-room-16 {
-  background-color: #85c0e8; }
+.map-cell-room-16 {
+  background-color: #cf9585; }
 
 .map-room-16-overlay {
-  background-color: rgba(133, 192, 232, 0.5);
-  color: #2f94d8;
-  border: 1px solid #2f94d8; }
+  background-color: rgba(207, 149, 133, 0.5);
+  color: #ab5a43;
+  border: 1px solid #ab5a43; }
 
-.map-room-17 {
-  background-color: #b99f6a; }
+.map-cell-room-17 {
+  background-color: #d7d5f8; }
 
 .map-room-17-overlay {
-  background-color: rgba(185, 159, 106, 0.5);
-  color: #816a3c;
-  border: 1px solid #816a3c; }
+  background-color: rgba(215, 213, 248, 0.5);
+  color: #847ee9;
+  border: 1px solid #847ee9; }
 
-.map-room-18 {
-  background-color: #82e8b6; }
+.map-cell-room-18 {
+  background-color: #c693df; }
 
 .map-room-18-overlay {
-  background-color: rgba(130, 232, 182, 0.5);
-  color: #2cd884;
-  border: 1px solid #2cd884; }
+  background-color: rgba(198, 147, 223, 0.5);
+  color: #9c44c8;
+  border: 1px solid #9c44c8; }
 
-.map-room-19 {
-  background-color: #c9f9db; }
+.map-cell-room-19 {
+  background-color: #77aa83; }
 
 .map-room-19-overlay {
-  background-color: rgba(201, 249, 219, 0.5);
-  color: #6def9e;
-  border: 1px solid #6def9e; }
+  background-color: rgba(119, 170, 131, 0.5);
+  color: #487352;
+  border: 1px solid #487352; }
 
-.map-room-20 {
-  background-color: #6ddb98; }
+.map-cell-room-20 {
+  background-color: #9d9db9; }
 
 .map-room-20-overlay {
-  background-color: rgba(109, 219, 152, 0.5);
-  color: #2db562;
-  border: 1px solid #2db562; }
+  background-color: rgba(157, 157, 185, 0.5);
+  color: #64648c;
+  border: 1px solid #64648c; }
 
-.map-room-21 {
-  background-color: #d16e75; }
+.map-cell-room-21 {
+  background-color: #7fd49d; }
 
 .map-room-21-overlay {
-  background-color: rgba(209, 110, 117, 0.5);
-  color: #a5343c;
-  border: 1px solid #a5343c; }
+  background-color: rgba(127, 212, 157, 0.5);
+  color: #3cb165;
+  border: 1px solid #3cb165; }
 
-.map-room-22 {
-  background-color: #9ee0ad; }
+.map-cell-room-22 {
+  background-color: #8065b2; }
 
 .map-room-22-overlay {
-  background-color: rgba(158, 224, 173, 0.5);
-  color: #51c76c;
-  border: 1px solid #51c76c; }
+  background-color: rgba(128, 101, 178, 0.5);
+  color: #503b76;
+  border: 1px solid #503b76; }
 
-.map-room-23 {
-  background-color: #c7cbb4; }
+.map-cell-room-23 {
+  background-color: #cbd77f; }
 
 .map-room-23-overlay {
-  background-color: rgba(199, 203, 180, 0.5);
-  color: #9aa178;
-  border: 1px solid #9aa178; }
+  background-color: rgba(203, 215, 127, 0.5);
+  color: #a6b739;
+  border: 1px solid #a6b739; }
 
-.map-room-24 {
-  background-color: #6f9ad6; }
+.map-cell-room-24 {
+  background-color: #9c9f9e; }
 
 .map-room-24-overlay {
-  background-color: rgba(111, 154, 214, 0.5);
-  color: #3165ae;
-  border: 1px solid #3165ae; }
+  background-color: rgba(156, 159, 158, 0.5);
+  color: #696c6b;
+  border: 1px solid #696c6b; }
 
-.map-room-25 {
-  background-color: #98b391; }
+.map-cell-room-25 {
+  background-color: #dfa4e7; }
 
 .map-room-25-overlay {
-  background-color: rgba(152, 179, 145, 0.5);
-  color: #63835b;
-  border: 1px solid #63835b; }
+  background-color: rgba(223, 164, 231, 0.5);
+  color: #c353d2;
+  border: 1px solid #c353d2; }
 
-.map-room-26 {
-  background-color: #f9b3d0; }
+.map-cell-room-26 {
+  background-color: #68bf95; }
 
 .map-room-26-overlay {
-  background-color: rgba(249, 179, 208, 0.5);
-  color: #f25496;
-  border: 1px solid #f25496; }
+  background-color: rgba(104, 191, 149, 0.5);
+  color: #398862;
+  border: 1px solid #398862; }
 
-.map-room-27 {
-  background-color: #f1a6f5; }
+.map-cell-room-27 {
+  background-color: #b59eed; }
 
 .map-room-27-overlay {
-  background-color: rgba(241, 166, 245, 0.5);
-  color: #e34aeb;
-  border: 1px solid #e34aeb; }
+  background-color: rgba(181, 158, 237, 0.5);
+  color: #7348dd;
+  border: 1px solid #7348dd; }
 
-.map-room-28 {
-  background-color: #add4ad; }
+.map-cell-room-28 {
+  background-color: #d4907d; }
 
 .map-room-28-overlay {
-  background-color: rgba(173, 212, 173, 0.5);
-  color: #6ab16a;
-  border: 1px solid #6ab16a; }
+  background-color: rgba(212, 144, 125, 0.5);
+  color: #b1543a;
+  border: 1px solid #b1543a; }
 
-.map-room-29 {
-  background-color: #ed84d7; }
+.map-cell-room-29 {
+  background-color: #8e73fa; }
 
 .map-room-29-overlay {
-  background-color: rgba(237, 132, 215, 0.5);
-  color: #e02bba;
-  border: 1px solid #e02bba; }
+  background-color: rgba(142, 115, 250, 0.5);
+  color: #3f11f6;
+  border: 1px solid #3f11f6; }
 
-.map-room-30 {
-  background-color: #ba8d89; }
+.map-cell-room-30 {
+  background-color: #e3f966; }
 
 .map-room-30-overlay {
-  background-color: rgba(186, 141, 137, 0.5);
-  color: #8b5652;
-  border: 1px solid #8b5652; }
+  background-color: rgba(227, 249, 102, 0.5);
+  color: #cdf009;
+  border: 1px solid #cdf009; }
 
-.map-room-31 {
-  background-color: #a3a8fe; }
+.map-cell-room-31 {
+  background-color: #a1a982; }
 
 .map-room-31-overlay {
-  background-color: rgba(163, 168, 254, 0.5);
-  color: #3e49fd;
-  border: 1px solid #3e49fd; }
+  background-color: rgba(161, 169, 130, 0.5);
+  color: #6d7550;
+  border: 1px solid #6d7550; }
 
-.map-room-32 {
-  background-color: #80b7aa; }
+.map-cell-room-32 {
+  background-color: #a28fa4; }
 
 .map-room-32-overlay {
-  background-color: rgba(128, 183, 170, 0.5);
-  color: #4c8578;
-  border: 1px solid #4c8578; }
+  background-color: rgba(162, 143, 164, 0.5);
+  color: #6f5c71;
+  border: 1px solid #6f5c71; }
 
-.map-room-33 {
-  background-color: #fbacf7; }
+.map-cell-room-33 {
+  background-color: #b96dc9; }
 
 .map-room-33-overlay {
-  background-color: rgba(251, 172, 247, 0.5);
-  color: #f64bee;
-  border: 1px solid #f64bee; }
+  background-color: rgba(185, 109, 201, 0.5);
+  color: #873898;
+  border: 1px solid #873898; }
 
-.map-room-34 {
-  background-color: #e1a49b; }
+.map-cell-room-34 {
+  background-color: #a4f4f0; }
 
 .map-room-34-overlay {
-  background-color: rgba(225, 164, 155, 0.5);
-  color: #c95d4d;
-  border: 1px solid #c95d4d; }
+  background-color: rgba(164, 244, 240, 0.5);
+  color: #49e9e1;
+  border: 1px solid #49e9e1; }
 
-.map-room-35 {
-  background-color: #c178b8; }
+.map-cell-room-35 {
+  background-color: #beffcf; }
 
 .map-room-35-overlay {
-  background-color: rgba(193, 120, 184, 0.5);
-  color: #914287;
-  border: 1px solid #914287; }
+  background-color: rgba(190, 255, 207, 0.5);
+  color: #58ff84;
+  border: 1px solid #58ff84; }
 
-.map-room-36 {
-  background-color: #ebfd81; }
+.map-cell-room-36 {
+  background-color: #7ba29a; }
 
 .map-room-36-overlay {
-  background-color: rgba(235, 253, 129, 0.5);
-  color: #dbfb1d;
-  border: 1px solid #dbfb1d; }
+  background-color: rgba(123, 162, 154, 0.5);
+  color: #4c6b65;
+  border: 1px solid #4c6b65; }
 
-.map-room-37 {
-  background-color: #b489fc; }
+.map-cell-room-37 {
+  background-color: #da86db; }
 
 .map-room-37-overlay {
-  background-color: rgba(180, 137, 252, 0.5);
-  color: #7526f9;
-  border: 1px solid #7526f9; }
+  background-color: rgba(218, 134, 219, 0.5);
+  color: #c03ac1;
+  border: 1px solid #c03ac1; }
 
-.map-room-38 {
-  background-color: #caa8bd; }
+.map-cell-room-38 {
+  background-color: #94b4f4; }
 
 .map-room-38-overlay {
-  background-color: rgba(202, 168, 189, 0.5);
-  color: #a3698d;
-  border: 1px solid #a3698d; }
+  background-color: rgba(148, 180, 244, 0.5);
+  color: #3873ea;
+  border: 1px solid #3873ea; }
 
-.map-room-39 {
-  background-color: #9ac16a; }
+.map-cell-room-39 {
+  background-color: #e29fe4; }
 
 .map-room-39-overlay {
-  background-color: rgba(154, 193, 106, 0.5);
-  color: #678b3a;
-  border: 1px solid #678b3a; }
+  background-color: rgba(226, 159, 228, 0.5);
+  color: #ca4fce;
+  border: 1px solid #ca4fce; }
 
-.map-room-40 {
-  background-color: #febde0; }
+.map-cell-room-40 {
+  background-color: #b79ccf; }
 
 .map-room-40-overlay {
-  background-color: rgba(254, 189, 224, 0.5);
-  color: #fc59b1;
-  border: 1px solid #fc59b1; }
+  background-color: rgba(183, 156, 207, 0.5);
+  color: #8557ae;
+  border: 1px solid #8557ae; }
 
-.map-room-41 {
-  background-color: #e7d7d2; }
+.map-cell-room-41 {
+  background-color: #f0cde2; }
 
 .map-room-41-overlay {
-  background-color: rgba(231, 215, 210, 0.5);
-  color: #c49c8f;
-  border: 1px solid #c49c8f; }
+  background-color: rgba(240, 205, 226, 0.5);
+  color: #d87fb4;
+  border: 1px solid #d87fb4; }
 
-.map-room-42 {
-  background-color: #d796c6; }
+.map-cell-room-42 {
+  background-color: #a4b872; }
 
 .map-room-42-overlay {
-  background-color: rgba(215, 150, 198, 0.5);
-  color: #bb4c9e;
-  border: 1px solid #bb4c9e; }
+  background-color: rgba(164, 184, 114, 0.5);
+  color: #708242;
+  border: 1px solid #708242; }
 
-.map-room-43 {
-  background-color: #ca96a5; }
+.map-cell-room-43 {
+  background-color: #74797f; }
 
 .map-room-43-overlay {
-  background-color: rgba(202, 150, 165, 0.5);
-  color: #a6546c;
-  border: 1px solid #a6546c; }
+  background-color: rgba(116, 121, 127, 0.5);
+  color: #43464a;
+  border: 1px solid #43464a; }
 
-.map-room-44 {
-  background-color: #896c82; }
+.map-cell-room-44 {
+  background-color: #6dd8c3; }
 
 .map-room-44-overlay {
-  background-color: rgba(137, 108, 130, 0.5);
-  color: #503f4c;
-  border: 1px solid #503f4c; }
+  background-color: rgba(109, 216, 195, 0.5);
+  color: #2fb097;
+  border: 1px solid #2fb097; }
 
-.map-room-45 {
-  background-color: #8ecf66; }
+.map-cell-room-45 {
+  background-color: #98cf87; }
 
 .map-room-45-overlay {
-  background-color: rgba(142, 207, 102, 0.5);
-  color: #5b9e31;
-  border: 1px solid #5b9e31; }
+  background-color: rgba(152, 207, 135, 0.5);
+  color: #5dab45;
+  border: 1px solid #5dab45; }
 
-.map-room-46 {
-  background-color: #ede1db; }
+.map-cell-room-46 {
+  background-color: #c6ffd2; }
 
 .map-room-46-overlay {
-  background-color: rgba(237, 225, 219, 0.5);
-  color: #cba897;
-  border: 1px solid #cba897; }
+  background-color: rgba(198, 255, 210, 0.5);
+  color: #60ff81;
+  border: 1px solid #60ff81; }
 
-.map-room-47 {
-  background-color: #976781; }
+.map-cell-room-47 {
+  background-color: #92d6ce; }
 
 .map-room-47-overlay {
-  background-color: rgba(151, 103, 129, 0.5);
-  color: #5a3e4d;
-  border: 1px solid #5a3e4d; }
+  background-color: rgba(146, 214, 206, 0.5);
+  color: #48baad;
+  border: 1px solid #48baad; }
 
-.map-room-48 {
-  background-color: #f080c2; }
+.map-cell-room-48 {
+  background-color: #d6d8bc; }
 
 .map-room-48-overlay {
-  background-color: rgba(240, 128, 194, 0.5);
-  color: #e52596;
-  border: 1px solid #e52596; }
+  background-color: rgba(214, 216, 188, 0.5);
+  color: #afb27c;
+  border: 1px solid #afb27c; }
 
-.map-room-49 {
-  background-color: #c78a6d; }
+.map-cell-room-49 {
+  background-color: #b46775; }
 
 .map-room-49-overlay {
-  background-color: rgba(199, 138, 109, 0.5);
-  color: #955739;
-  border: 1px solid #955739; }
+  background-color: rgba(180, 103, 117, 0.5);
+  color: #793c47;
+  border: 1px solid #793c47; }
 
-.map-room-50 {
-  background-color: #9da274; }
+.map-cell-room-50 {
+  background-color: #acea8a; }
 
 .map-room-50-overlay {
-  background-color: rgba(157, 162, 116, 0.5);
-  color: #666947;
-  border: 1px solid #666947; }
+  background-color: rgba(172, 234, 138, 0.5);
+  color: #6fda34;
+  border: 1px solid #6fda34; }
 
 .map-room, #map-pathes {
   position: absolute;

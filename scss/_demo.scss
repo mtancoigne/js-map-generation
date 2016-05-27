@@ -27,6 +27,7 @@ $padding-lg:10px;
 
 $margin-sm:5px;
 $margin-lg:15px;
+$main-width: 14*80+2+2*$padding-lg;
 
 *{
   box-sizing: border-box;
@@ -77,10 +78,10 @@ button{
   }
 }
 #main{
-  width:(560+2+2*$padding-lg);
+  width:($main-width);
   margin-left:50%;
   transform: translateX(-50%);
-  @media(max-width:(560+2+2*$padding-lg)){
+  @media(max-width:($main-width)){
     transform: none;
     margin-left: 0px;
   }
