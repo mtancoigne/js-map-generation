@@ -5,7 +5,6 @@
 */
 function createAndRenderMap(o){
   defaults={
-    minRoomSize:50,
     mapOptions:{},
     // Min room size on cleaning.
     minRoomSize:50,

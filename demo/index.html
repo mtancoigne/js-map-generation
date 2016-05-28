@@ -8,20 +8,77 @@
   <body>
     <div id="main">
       <h1>Map generation<small> - work in progress</small></h1>
-      <p>Walls are grey bricks, floor is coloured pavement.</p>
-
-      <div id="grid">
-        <div id="rooms"></div>
-        <!-- Canva for pathes will go here -->
-      </div>
-
-      <div id="menu">
+      <div class="panel">
         <pre class="info">&gt;<span id="position"></span></pre>
-        <button id="toggleRooms">Show/hide rooms bounding boxes</button>
-        <button id="togglePathes">Show/hide pathes</button>
-        <button id="toggleRoomLimits" disabled>Show/hide rooms frontiers</button>
       </div>
+      <div id="content">
+        <div id="menu" class="panel">
+          <button id="toggleRooms">Show/hide rooms bounding boxes</button>
+          <button id="togglePathes">Show/hide pathes</button>
+          <button id="toggleRoomLimits" disabled>Show/hide rooms frontiers</button>
+          <h2>Options</h2>
+          <div class="accordion">
+            <div class="menu-button">Map generation</div>
+            <div class="menu-content">
+              description of this
+              x,
+              y,
+              passes,
+              cleanLevel,
+              wallPercent,
+              sameSubCellPercent,
+            </div>
 
+            <div class="menu-button">Map cleaning</div>
+            <div class="menu-content">
+              minRoomSize,
+              description of this
+            </div>
+
+            <div class="menu-button">Content: general options</div>
+            <div class="menu-content">
+              placeLivingThings:true,
+              placeDeadThings:true,
+            </div>
+
+            <div class="menu-button">Content: enemies</div>
+            <div class="menu-content">
+              createEnnemies:true,
+              ennemiesPercent:10,
+              createBoss:true,
+            </div>
+
+            <div class="menu-button">Content: items</div>
+            <div class="menu-content">
+              createLifePotions:true,
+              lifePotionsMapPercent:2,
+              createStrenghtTokens:true,
+              createDamageTokens:true,
+              strenghtTokenMapPercent:3,
+              damageTokenMapPercent:3,
+              placeObjectsOnDamagingCells:true,
+            </div>
+
+            <div class="menu-button">Debug</div>
+            <div class="menu-content">
+              drawRooms:true,
+              drawPathes:true,
+              useSample:false,
+            </div>
+            <!-- Menu entry snippet
+            <div class="menu-button"></div>
+            <div class="menu-content">
+            </div>
+            -->
+          </div>
+          <button id="mapReGenerate">Re-generate !</button>
+        </div>
+
+        <div id="grid" class="panel">
+          <div id="rooms"></div>
+          <!-- Canva for pathes will go here -->
+        </div>
+      </div>
 
 <pre>
   [X] - Generating random map
@@ -100,6 +157,14 @@
           var mousex = e.pageX + 20; //Get X coordinates
           var mousey = e.pageY + 10; //Get Y coordinates
           $('.tooltip').css({ top: mousey, left: mousex });
+        });
+
+        // Accordion, code found here : http://www.stemkoski.com/stupid-simple-jquery-accordion-menu/
+        jQuery(function() {
+        	jQuery('.menu-button').on('click',function() {
+        		jQuery('.menu-content').slideUp('fast');
+        		jQuery(this).next('.menu-content').slideDown('fast');
+        	});
         });
       });
     </script>
