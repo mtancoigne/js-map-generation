@@ -12,8 +12,8 @@ var bossNames=[
   {name:'Nipah Virus', description:'Nipah virus was identified in April 1999, when it caused an outbreak of neurological and respiratory disease on pig farms in peninsular Malaysia, resulting in 257 human cases, including 105 human deaths and the culling of one million pigs.', more:'https://en.wikipedia.org/wiki/Henipavirus#Nipah_virus'},
 ]
 
-// Some ennemies : bacterias and fungis
-var ennemyNames=[
+// Some enemies : bacterias and fungis
+var enemyNames=[
   // Lazy me... http://alltoptens.com/top-ten-most-dangerous-bacteria-on-earth/
   // This list was completed with wikipedia articles and some names has been changed or removed when info wasn't clear enough.
   {name:'Escherichia coli', description:'Virulent strains can cause gastroenteritis, urinary tract infections, and neonatal meningitis. It can also be characterized by severe abdominal cramps, diarrhea that typically turns bloody within 24 hours, and sometimes fever.', more:'https://en.wikipedia.org/wiki/Escherichia_coli'},
@@ -31,7 +31,7 @@ var ennemyNames=[
 var basePlayerStats={life:50, damage:10, strenght:1, level:1};
 
 // Player
-// For ennemies and bosses, this should be filled after map generation, as the createEnnemies function
+// For enemies and bosses, this should be filled after map generation, as the createEnemies function
 // needs infos baout the map.
 var living_things={
   player: new Item({name:'Leukocyt', description: 'You, a white globule', canMove:true, stats: itemStats(basePlayerStats), className:'player'}),

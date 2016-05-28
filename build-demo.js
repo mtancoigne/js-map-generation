@@ -6,12 +6,11 @@
 */
 function createAndRenderMap(o){
   defaults={
-    minRoomSize:50,
     mapOptions:{},
     // Min room size on cleaning.
     minRoomSize:50,
-    createEnnemies:true,
-    ennemiesPercent:10,
+    createEnemies:true,
+    enemiesPercent:10,
     createBoss:true,
     createLifePotions:true,
     lifePotionsMapPercent:2,
@@ -50,9 +49,9 @@ function createAndRenderMap(o){
     (beside of map.addItem())
   */
 
-  // Creating ennemies, taking size of the map in account
-  if(o.createEnnemies){('ennemy', living_things.player.level, walkableSafeCells.length);}
-  if(o.createBoss){createEnnemies('boss', living_things.player.level, null, 1);}
+  // Creating enemies, taking size of the map in account
+  if(o.createEnemies){('enemy', living_things.player.level, walkableSafeCells.length);}
+  if(o.createBoss){createEnemies('boss', living_things.player.level, null, 1);}
   // Adding to the map
   if(o.placeLivingThings){map.addItems(living_things, true);}
   // Creating life potions
@@ -138,7 +137,7 @@ function itemStats(options){
 }
 
 /**
-  Represents an item (static item, ennemy, player,...)
+  Represents an item (static item, enemy, player,...)
   @constructor
   @param object options - A list of named options.
 */
@@ -162,59 +161,59 @@ var Item=function(options){
 };
 
 /**
-  Generate ennemies and adds them to the living_things
-  @param string type - The type of ennemy (ennemy/boss)
-  @param int playerLevel - Player level, to generate ennemy stats
-  @param int walkableCells - Number of walkable cells to base ennemies number
-  @param int number - Forces the ennemy number
+  Generate enemies and adds them to the living_things
+  @param string type - The type of enemy (enemy/boss)
+  @param int playerLevel - Player level, to generate enemy stats
+  @param int walkableCells - Number of walkable cells to base enemies number
+  @param int number - Forces the enemy number
 */
-function createEnnemies(type, playerLevel, walkableCells, number){
+function createEnemies(type, playerLevel, walkableCells, number){
   var nb=0;
   if(number!=undefined){
     nb=number;
   }else{
     nb=Math.floor(5*walkableCells/100);
   }
-  // Number of ennemies to generate:
-  var ennemies={};
+  // Number of enemies to generate:
+  var enemies={};
   for(let i=0; i<nb; i++){
-    // Select random ennemy
-    let ennemy=ennemyNames[Math.floor(Math.random()*ennemyNames.length)];
-    let ennemyStats={};
+    // Select random enemy
+    let enemy=enemyNames[Math.floor(Math.random()*enemyNames.length)];
+    let enemyStats={};
     // Generate random states
     var randomGen=Math.floor(Math.random()*101);
     if(randomGen<80){
-      ennemyStats.life=basePlayerStats.life*0.8;
-      ennemyStats.damage=basePlayerStats.damage;
-      ennemyStats.strenght=basePlayerStats.strenght;
-      ennemyStats.level=basePlayerStats.level;
-      ennemyStats.giveXp=ennemyStats.level*10;
+      enemyStats.life=basePlayerStats.life*0.8;
+      enemyStats.damage=basePlayerStats.damage;
+      enemyStats.strenght=basePlayerStats.strenght;
+      enemyStats.level=basePlayerStats.level;
+      enemyStats.giveXp=enemyStats.level*10;
     }else if (randomGen<90) {
-      ennemyStats.life=basePlayerStats.life*1.1;
-      ennemyStats.damage=Math.ceil(basePlayerStats.damage*(Math.floor(Math.random()*0.2)+1));
-      ennemyStats.strenght=Math.ceil(basePlayerStats.strenght*(Math.floor(Math.random()*0.2)+1));
-      ennemyStats.level=basePlayerStats.level+1;
-      ennemyStats.giveXp=ennemyStats.level*20;
+      enemyStats.life=basePlayerStats.life*1.1;
+      enemyStats.damage=Math.ceil(basePlayerStats.damage*(Math.floor(Math.random()*0.2)+1));
+      enemyStats.strenght=Math.ceil(basePlayerStats.strenght*(Math.floor(Math.random()*0.2)+1));
+      enemyStats.level=basePlayerStats.level+1;
+      enemyStats.giveXp=enemyStats.level*20;
     }else if(randomGen<97) {
-      ennemyStats.life=basePlayerStats.life*1.4;
-      ennemyStats.damage=Math.ceil(basePlayerStats.damage*(Math.floor(Math.random()*0.4)+1));
-      ennemyStats.strenght=Math.ceil(basePlayerStats.strenght*(Math.floor(Math.random()*0.4)+1));
-      ennemyStats.level=basePlayerStats.level+2;
-      ennemyStats.giveXp=ennemyStats.level30;
+      enemyStats.life=basePlayerStats.life*1.4;
+      enemyStats.damage=Math.ceil(basePlayerStats.damage*(Math.floor(Math.random()*0.4)+1));
+      enemyStats.strenght=Math.ceil(basePlayerStats.strenght*(Math.floor(Math.random()*0.4)+1));
+      enemyStats.level=basePlayerStats.level+2;
+      enemyStats.giveXp=enemyStats.level30;
     }else{
-      ennemyStats.life=basePlayerStats.life*1.6;
-      ennemyStats.damage=Math.ceil(basePlayerStats.damage*(Math.floor(Math.random()*0.6)+1));
-      ennemyStats.strenght=Math.ceil(basePlayerStats.strenght*(Math.floor(Math.random()*0.6)+1));
-      ennemyStats.level=basePlayerStats.level+3;
-      ennemyStats.giveXp=ennemyStats.level*40;
+      enemyStats.life=basePlayerStats.life*1.6;
+      enemyStats.damage=Math.ceil(basePlayerStats.damage*(Math.floor(Math.random()*0.6)+1));
+      enemyStats.strenght=Math.ceil(basePlayerStats.strenght*(Math.floor(Math.random()*0.6)+1));
+      enemyStats.level=basePlayerStats.level+3;
+      enemyStats.giveXp=enemyStats.level*40;
     }
 
      living_things[type+'_'+i]=new Item({
-      name:ennemy.name,
-      description:ennemy.description+' <a href="'+ennemy.more+'" target="_blank">More...</a>',
+      name:enemy.name,
+      description:enemy.description+' <a href="'+enemy.more+'" target="_blank">More...</a>',
       canMove:true,
-      stats: itemStats(ennemyStats),
-      className: (number===1?'boss': 'ennemy'),
+      stats: itemStats(enemyStats),
+      className: (number===1?'boss': 'enemy'),
     })
   }
 }
@@ -281,8 +280,8 @@ var bossNames=[
   {name:'Nipah Virus', description:'Nipah virus was identified in April 1999, when it caused an outbreak of neurological and respiratory disease on pig farms in peninsular Malaysia, resulting in 257 human cases, including 105 human deaths and the culling of one million pigs.', more:'https://en.wikipedia.org/wiki/Henipavirus#Nipah_virus'},
 ]
 
-// Some ennemies : bacterias and fungis
-var ennemyNames=[
+// Some enemies : bacterias and fungis
+var enemyNames=[
   // Lazy me... http://alltoptens.com/top-ten-most-dangerous-bacteria-on-earth/
   // This list was completed with wikipedia articles and some names has been changed or removed when info wasn't clear enough.
   {name:'Escherichia coli', description:'Virulent strains can cause gastroenteritis, urinary tract infections, and neonatal meningitis. It can also be characterized by severe abdominal cramps, diarrhea that typically turns bloody within 24 hours, and sometimes fever.', more:'https://en.wikipedia.org/wiki/Escherichia_coli'},
@@ -300,7 +299,7 @@ var ennemyNames=[
 var basePlayerStats={life:50, damage:10, strenght:1, level:1};
 
 // Player
-// For ennemies and bosses, this should be filled after map generation, as the createEnnemies function
+// For enemies and bosses, this should be filled after map generation, as the createEnemies function
 // needs infos baout the map.
 var living_things={
   player: new Item({name:'Leukocyt', description: 'You, a white globule', canMove:true, stats: itemStats(basePlayerStats), className:'player'}),
