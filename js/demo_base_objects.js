@@ -29,13 +29,9 @@ var enemyNames=[
 
 // Base player stats
 var basePlayerStats={life:50, damage:10, strenght:1, level:1};
+var basePlayer=new Item({name:'Leukocyt', description: 'You, a white globule', canMove:true, stats: itemStats(basePlayerStats), className:'player'});
 
-// Player
-// For enemies and bosses, this should be filled after map generation, as the createEnemies function
-// needs infos baout the map.
-var living_things={
-  player: new Item({name:'Leukocyt', description: 'You, a white globule', canMove:true, stats: itemStats(basePlayerStats), className:'player'}),
-}
+var living_things={}
 var dead_things={};
 
 // Pickable items

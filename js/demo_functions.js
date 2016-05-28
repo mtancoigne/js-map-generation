@@ -8,6 +8,7 @@ function createAndRenderMap(o){
     mapOptions:{},
     // Min room size on cleaning.
     minRoomSize:50,
+    cleanSmallRooms:true,
     createEnemies:true,
     enemiesPercent:10,
     createBoss:true,
@@ -36,12 +37,16 @@ function createAndRenderMap(o){
   map.createMap();
   //map.createMapFromSample(samples[2]);
   map.createRooms();
-  if(o.minRoomSize>0){map.removeSmallRooms(o.minRoomSize);}
+  if(o.minRoomSize>0 && o.cleanSmallRooms){map.removeSmallRooms(o.minRoomSize);}
 
   // At this point we can consider the map geography won't change, so we can
   // generate some data about it
   var walkableCells=map._getWalkableCells(false);
   var walkableSafeCells=map._getWalkableCells(true);
+
+  // Reset ennemies and items
+  dead_things={};
+  living_things={player: basePlayer};
 
   /*
     "game" specific "mechanisms" here. This is not included in the class
@@ -49,7 +54,7 @@ function createAndRenderMap(o){
   */
 
   // Creating enemies, taking size of the map in account
-  if(o.createEnemies){createEnemies('enemy', living_things.player.level, walkableSafeCells.length);}
+  if(o.createEnemies){createEnemies('enemy', living_things.player.level, walkableSafeCells.length, o.enemiesPercent);}
   if(o.createBoss){createEnemies('boss', living_things.player.level, null, 1);}
   // Adding to the map
   if(o.placeLivingThings){map.addItems(living_things, true);}
@@ -59,13 +64,15 @@ function createAndRenderMap(o){
   if(o.createStrenghtTokens){createSimpleItem('token_strength', walkableSafeCells.length, o.strenghtTokenMapPercent);}
   if(o.createDamageTokens){createSimpleItem('token_damage', walkableSafeCells.length, o.damageTokenMapPercent);}
   // Adding them to the map.
-  if(o.placeDeadThings){map.addItems(dead_things, !o.placeObjectsOnDamagingCells);}
 
+  if(o.placeDeadThings){map.addItems(dead_things, !o.placeObjectsOnDamagingCells);}
   // Debug
   //map.outlineRooms();
   if(o.drawPathes){map._findPaths();}
 
   // Render the map
+  // Reset the output
+  $('#grid').html('<div id="rooms"></div>');
   map.jQueryRender('#grid');
 
   /***************************************************************************
@@ -107,6 +114,33 @@ function createAndRenderMap(o){
     ctx.closePath();
     ctx.stroke();
   }
+
+  /********************
+  jQuery bindings
+  */
+
+  $('#rooms').hide();
+  $('#map-pathes').hide();
+  // Re bind
+  $('.map-cell').hover(function(a){
+    $('#position').text($(this).attr('class'))
+  });
+
+  // Tooltips. (base from http://www.alessioatzeni.com/blog/simple-tooltip-with-jquery-only-text/)
+  $('.map-cell').hover(function(){
+    // Hover over code
+    var cellId = $(this).attr('title');
+    var content='Cell :'+displayData(map.cells[cellId])+'Content:' +displayData(map.items[map.getCellContent(cellId)]);
+    $(this).data('tipText', cellId).removeAttr('title');
+    $('<p class="tooltip"></p>').html(content).appendTo('body').fadeIn('slow');}, function() {
+      // Hover out code
+      $(this).attr('title', $(this).data('tipText'));
+      $('.tooltip').remove();
+    }).mousemove(function(e) {
+      var mousex = e.pageX + 20; //Get X coordinates
+      var mousey = e.pageY + 10; //Get Y coordinates
+      $('.tooltip').css({ top: mousey, left: mousex });
+  });
 }
 
 /**
@@ -164,14 +198,15 @@ var Item=function(options){
   @param string type - The type of enemy (enemy/boss)
   @param int playerLevel - Player level, to generate enemy stats
   @param int walkableCells - Number of walkable cells to base enemies number
+  @param float enemiesPercent - Percentage
   @param int number - Forces the enemy number
 */
-function createEnemies(type, playerLevel, walkableCells, number){
+function createEnemies(type, playerLevel, walkableCells, enemiesPercent, number){
   var nb=0;
   if(number!=undefined){
     nb=number;
   }else{
-    nb=Math.floor(5*walkableCells/100);
+    nb=Math.floor(enemiesPercent*walkableCells/100);
   }
   // Number of enemies to generate:
   var enemies={};
@@ -207,7 +242,7 @@ function createEnemies(type, playerLevel, walkableCells, number){
       enemyStats.giveXp=enemyStats.level*40;
     }
 
-     living_things[type+'_'+i]=new Item({
+    living_things[type+'_'+i]=new Item({
       name:enemy.name,
       description:enemy.description+' <a href="'+enemy.more+'" target="_blank">More...</a>',
       canMove:true,
@@ -266,4 +301,40 @@ function displayData(json){
   }
   content+='</ul>'
   return content;
+}
+
+function getOptions(){
+  var options= {
+    mapOptions:{
+      x:Number($('#oOptionsX').val()),
+      y:Number($('#oOptionsY').val()),
+      passes:Number($('#oOptionsPasses').val()),
+      cleanLevel:Number($('#oOptionsCleanLevel').val()),
+      wallPercent:Number($('#oOptionsWallPercent').val()),
+      sameSubCellPercent:Number($('#oOptionsSameSubCellPercent').val()),
+      cssPrefix:'map-',
+      cellTypes:cellTypes,
+    },
+    minRoomSize:Number($('#oMinRoomSize').val()),
+    cleanSmallRooms:$('#oCleanSmallRooms').is(':checked'),
+    createEnemies:$('#oCreateEnemies').is(':checked'),
+    enemiesPercent:Number($('#oEnemiesPercent').val()),
+    createBoss:$('#oCreateBoss').is(':checked'),
+    createLifePotions:$('#oCreateLifePotions').is(':checked'),
+    lifePotionsMapPercent:Number($('#oLifePotionsMapPercent').val()),
+    createStrenghtTokens:$('#oCreateStrenghtTokens').is(':checked'),
+    createDamageTokens:$('#oCreateDamageTokens').is(':checked'),
+    strenghtTokenMapPercent:Number($('#oStrenghtTokenMapPercent').val()),
+    damageTokenMapPercent:Number($('#oDamageTokenMapPercent').val()),
+    placeLivingThings:$('#oPlaceLivingThings').is(':checked'),
+    placeDeadThings:$('#oPlaceDeadThings').is(':checked'),
+    drawRooms:$('#oDrawRooms').is(':checked'),
+    drawPathes:$('#oDrawPathes').is(':checked'),
+    useSample:$('#oUseSample').is(':checked'),
+    placeObjectsOnDamagingCells:$('#oPlaceObjectsOnDamagingCells').is(':checked'),
+    sample:[],
+  }
+  console.log(options);
+  return options;
+
 }

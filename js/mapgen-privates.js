@@ -4,7 +4,7 @@
   @param y int - Current col
 */
 MapGen.prototype._getCellType=function(x, y){
-  if(x>=0 && y>=0 && x<this.grid.length && y<this.grid.length){
+  if(x>=0 && y>=0 && x<this.grid[0].length && y<this.grid.length){
     return this.cells[x+':'+y].type.name;//grid[x][y];
   }else{
     return this.WALL; // Outside the map, so it's a wall.
@@ -134,9 +134,18 @@ MapGen.prototype._getWalkableCellsAround=function (x,y){
     let newX=inside[i][0];
     let newY=inside[i][1];
     if(newX>=0 && newY>=0){
-      if(this.cells[newX+':'+newY].type.isWalkable === true){
-        results.push(inside[i]);
+      try {
+        if(this.cells[newX+':'+newY].type.isWalkable === true){
+          results.push(inside[i]);
+        }
+      } catch (e) {
+        console.log(e);
+        console.log({x:x,y:y, newX:newX, newY:newY, type:type})
+        console.log(this.cells);
+      } finally {
+
       }
+
     }
   }
   return results;

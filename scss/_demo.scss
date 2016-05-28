@@ -85,6 +85,31 @@ button{
     background-color:lighten($border-color, 10%);
   }
 }
+
+input{
+  background-color:$bg-color;
+  border:1px solid $border-color;
+  padding:$padding-sm;
+  border-bottom-width: 3px;
+}
+input:focus{
+  background-color: lighten($bg-color, 10%);
+}
+
+/* Remove controls from Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+  text-align: right;
+}
+
+/* Re-applies the controls on :hover and :focus */
+input[type="number"]:hover,
+input[type="number"]:focus {
+  -moz-appearance: number-input;
+}
+// Remove the glow.
+textarea, input { outline: none; }
+
 #main{
   width:($main-width);
   margin-left:50%;
@@ -122,7 +147,7 @@ button{
   float:left;
 }
 
-#mapReGenerate{
+.mapReGenerateBtn{
   padding:$padding-lg;
   background-color: lighten($green-border-color, 5%);
   border-color:$green-border-color;
@@ -134,7 +159,9 @@ button{
     background-color:lighten($green-border-color, 10%);
   }
 }
-
+.disabled{
+  opacity: 0.7;
+}
 .panel{
   border: 1px solid $border-color;
   background-color: $pane-bg-color;
@@ -184,5 +211,35 @@ button{
 	padding-bottom:$padding-lg;
   &:last-child{
     padding-bottom:0px;
+  }
+}
+
+.opt-group{
+  margin-top:$margin-sm;
+  margin-bottom:$margin-lg;
+  border-bottom:1px dashed $border-color;
+  &:last-child{
+    border-bottom:none;
+    margin-bottom:0px;
+  }
+  label{
+    font-weight:bold;
+  }
+  input[type=text], input[type=number] {
+    display:block;
+    width:100%
+  }
+  .help{
+    clear:both;
+    display:block;
+    font-size:0.8em;
+  }
+  code{
+    float:right;
+    font-weight:lighter;
+    font-size:0.8em;
+    background-color: lighten($blue-border-color, 15%);
+    padding:0 $padding-sm;
+    font-family: monospace;
   }
 }

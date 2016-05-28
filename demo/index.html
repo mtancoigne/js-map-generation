@@ -17,65 +17,165 @@
           <button id="togglePathes">Show/hide pathes</button>
           <button id="toggleRoomLimits" disabled>Show/hide rooms frontiers</button>
           <h2>Options</h2>
+          <p>
+            The only options that changes the map size/behaviour are the options of the <em>Map generation</em> and <em>Map cleaning</em> sections.
+          </p>
+          <button class="mapReGenerateBtn">Re-generate</button>
           <div class="accordion">
-            <div class="menu-button">Map generation</div>
+            <div class="menu-button">&gt; Map generation</div>
             <div class="menu-content">
-              description of this
-              x,
-              y,
-              passes,
-              cleanLevel,
-              wallPercent,
-              sameSubCellPercent,
+              <div class="opt-group">
+                <label for="oOptionsX">Initial width <code>mapOptions.x</code></label>
+                <input type="number" id="oOptionsX" value="5" />
+                <span class="help">Initial number of blocks on X axis</span>
+              </div>
+              <div class="opt-group">
+                <label for="oOptionsY">Initial height <code>mapOptions.y</code></label>
+                <input type="number" id="oOptionsY" value="5"/>
+                <span class="help">Initial number of blocks on Y axis</span>
+              </div>
+              <div class="opt-group">
+                <label for="oOptionsPasses">Number of passes <code>mapOptions.passes</code></label>
+                <input type="number" id="oOptionsPasses" value="3"/>
+                <span class="help">Number of times the initial grid will be expended</span>
+              </div>
+              <div class="opt-group">
+                <label for="oOptionsCleanLevel">Cleanness level<code>mapOptions.cleanLevel</code></label>
+                <input type="number" id="oOptionsCleanLevel" value="2"/>
+                <span class="help">0-5, defines the precision to remove lonely cells. To keep all the cells, use 0.</span>
+              </div>
+              <div class="opt-group">
+                <label for="oOptionsWallPercent">Wall percentage<code>mapOptions.wallPercent</code></label>
+                <input type="number" id="oOptionsWallPercent" value="30"/>
+                <span class="help">Percentage of walls against other cells</span>
+              </div>
+              <div class="opt-group">
+                <label for="oOptionsSameSubCellPercent">Same sub cell percentage<code>mapOptions.sameSubCellPercent</code></label>
+                <input type="number" id="oOptionsSameSubCellPercent" value="80"/>
+                <span class="help">Defines the percentage of chances for a subcell to be of the same cell as its parent</span>
+              </div>
+              <div class="opt-group disabled">
+                <label> Css prefix:<code>mapOptions.cssPrefix</code></label>
+                <input type="text" value="map-" disabled/>
+                <span class="help">Prefix used for rendered Html elements. Disabled here for obvious reasons.</span>
+              </div>
             </div>
 
-            <div class="menu-button">Map cleaning</div>
+            <div class="menu-button">&gt; Map cleaning</div>
             <div class="menu-content">
-              minRoomSize,
-              description of this
+              <div class="opt-group">
+                <label for="oCleanSmallRooms"><input type="checkbox" id="oCleanSmallRooms" checked/> Clean small rooms ?<code>cleanSmallRooms</code></label>
+                <span class="help">After the map generation, some small rooms may exists. Checking this will remove them</span>
+              </div>
+              <div class="opt-group">
+                <label for="oMinRoomSize">Min room size<code>minRoomSize</code></label>
+                <input type="number" id="oMinRoomSize" value="50"/>
+                <span class="help">When cleaning, defines the min size of rooms (in cells) to keep</span>
+              </div>
             </div>
 
-            <div class="menu-button">Content: general options</div>
+            <div class="menu-button">&gt; Content: enemies</div>
             <div class="menu-content">
-              placeLivingThings:true,
-              placeDeadThings:true,
+              <div class="opt-group">
+                <label for="oCreateEnemies"><input type="checkbox" id="oCreateEnemies" checked /> Generate enemies<code>createEnemies</code></label>
+                <span class="help">Will generate random ennemies, based on the available cells and player level</span>
+              </div>
+              <div class="opt-group">
+                <label for="oEnemiesPercent">Percentage of enemies<code>enemiesPercent</code></label>
+                <input type="number" id="oEnemiesPercent" value="2"/>
+                <span class="help">Determines the number of ennemies to generate, in percentage of <em>walkable</em>, non damaging cells.</span>
+              </div>
+              <div class="opt-group">
+                <label for="oCreateBoss"><input type="checkbox" id="oCreateBoss" checked /> Create a boss ?<code>createBoss</code></label>
+                <span class="help">Will generate a random boss</span>
+              </div>
             </div>
 
-            <div class="menu-button">Content: enemies</div>
+            <div class="menu-button">&gt; Content: items</div>
             <div class="menu-content">
-              createEnemies:true,
-              enemiesPercent:10,
-              createBoss:true,
+              <div class="opt-group">
+                <label for="oCreateLifePotions"><input type="checkbox" id="oCreateLifePotions"  checked/> Create some life potions ?<code>createLifePotions</code></label>
+                <span class="help">Will generate some life potions</span>
+              </div>
+              <div class="opt-group">
+                <label for="oLifePotionsMapPercent">Percentage of life potions<code>lifePotionsMapPercent</code></label>
+                <input type="number" id="oLifePotionsMapPercent" value="2" />
+                <span class="help">This defines the number of life potions to be generated. Computed in percentage of <em>walkable</em> cells</span>
+              </div>
+              <div class="opt-group">
+                <label for="oCreateStrenghtTokens"><input type="checkbox" id="oCreateStrenghtTokens"  checked/> Create tokens of strenght ?<code>createStrenghtTokens</code></label>
+                <span class="help">Will generate tokens of strenght</span>
+              </div>
+              <div class="opt-group">
+                <label for="oStenghtTokenMapPercent"><code>strenghtTokenMapPercent</code></label>
+                <input type="number" id="oStrenghtTokenMapPercent" value="3" />
+                <span class="help">This defines the number of tokens of strenght to be generated. Computed in percentage of <em>walkable</em> cells</span>
+              </div>
+              <div class="opt-group">
+                <label for="oCreateDamageTokens"><input type="checkbox" id="oCreateDamageTokens"  checked/> Create tokens of damage ?<code>createDamageTokens</code></label>
+                <span class="help">Will generate tokens of damage</span>
+              </div>
+              <div class="opt-group">
+                <label for="oDamageTokenMapPercent"><code>damageTokenMapPercent</code></label>
+                <input type="number" id="oDamageTokenMapPercent"  value="3"/>
+                <span class="help">This defines the number of tokens of damage to be generated. Computed in percentage of <em>walkable</em> cells</span>
+              </div>
+              <div class="opt-group">
+                <label for="oPlaceObjectsOnDamagingCells"><input type="checkbox" id="oPlaceObjectsOnDamagingCells" checked /> Place objects on damaging cells ?<code>placeObjectsOnDamagingCells</code></label>
+                <span class="help">Items may pop up on lava</span>
+              </div>
             </div>
 
-            <div class="menu-button">Content: items</div>
+            <div class="menu-button">&gt; Content: general options</div>
             <div class="menu-content">
-              createLifePotions:true,
-              lifePotionsMapPercent:2,
-              createStrenghtTokens:true,
-              createDamageTokens:true,
-              strenghtTokenMapPercent:3,
-              damageTokenMapPercent:3,
-              placeObjectsOnDamagingCells:true,
+              <div class="opt-group">
+                <label for="oPlaceLivingThings"><input type="checkbox" id="oPlaceLivingThings" checked /> Place living objects ?<code>placeLivingThings</code></label>
+                <span class="help">Will generate and place the player, ennemies and boss on the map.</span>
+              </div>
+              <div class="opt-group">
+                <label for="oPlaceDeadThings"><input type="checkbox" id="oPlaceDeadThings" checked /> Place items<code>placeDeadThings</code></label>
+                <span class="help">Will generate and place some life potions and tokens</span>
+              </div>
             </div>
 
-            <div class="menu-button">Debug</div>
+            <div class="menu-button">&gt; Debug</div>
             <div class="menu-content">
-              drawRooms:true,
-              drawPathes:true,
-              useSample:false,
+              <div class="opt-group">
+                <label for="oDrawPathes"><input type="checkbox" id="oDrawPathes" checked /> Draw the pathes<code>drawPathes</code></label>
+                <span class="help">Draw the pathes between rooms centers</span>
+              </div>
+              <div class="opt-group">
+                <label for="oDrawRooms"><input type="checkbox" id="oDrawRooms" checked /> Draw rooms ?<code>drawRooms</code></label>
+                <span class="help">Creates the rooms overlay.</span>
+              </div>
+              <div class="opt-group disabled">
+                <label for="oUseSample"><input type="checkbox" id="oUseSample" disabled/> Use a custom sample ?<code>useSample</code></label>
+                <span class="help"></span>
+              </div>
             </div>
-            <!-- Menu entry snippet
+            <!--
+            // Menu entry snippet
             <div class="menu-button"></div>
             <div class="menu-content">
             </div>
+            // Option snippet
+            <div class="opt-group">
+              <label for="o"><code></code></label>
+              <input type="number" id="o" />
+              <span class="help"></span>
+            </div>
+            // Checkbox option snippet
+            <div class="opt-group">
+              <label for="o"><input type="checkbox" id="o" /> <code></code></label>
+              <span class="help"></span>
+            </div>
             -->
           </div>
-          <button id="mapReGenerate">Re-generate !</button>
+          <button class="mapReGenerateBtn">Re-generate !</button>
         </div>
 
         <div id="grid" class="panel">
-          <div id="rooms"></div>
+          <!-- Div for rooms overlay will go here -->
           <!-- Canva for pathes will go here -->
         </div>
       </div>
@@ -106,67 +206,33 @@
     <script type="text/javascript">
 
     var map=null;
-    var options={
-      // Options for the map generator
-      mapOptions:{
-        x:5,
-        y:5,
-        passes:3,
-        cleanLevel: 5,
-        wallPercent:30,
-        // Cell types are defined in demo.js
-        cellTypes: cellTypes,
-      }
-    }
+    var options={};
 
-    createAndRenderMap(options);
-
-
-    /***************************************************************************
-      JQuery
-    */
-    $('#rooms').hide();
-    $('#map-pathes').hide();
     /**
       Events on buttons
     */
     $('#toggleRooms').click(function(){
       $('#rooms').toggle();
     })
+
     $('#togglePathes').click(function(){
       $('#map-pathes').toggle();
     })
 
-    $('.map-cell').hover(function(a){
-      $('#position').text($(this).attr('class'))
+    $('.mapReGenerateBtn').click(function(){
+      createAndRenderMap(getOptions());
     });
 
-    // Tooltips. (base from http://www.alessioatzeni.com/blog/simple-tooltip-with-jquery-only-text/)
     $(document).ready(function() {
-      // Tooltip only Text
-      $('.map-cell').hover(function(){
-        // Hover over code
-        var cellId = $(this).attr('title');
-        var content='Cell :'+displayData(map.cells[cellId])+'Content:' +displayData(map.items[map.getCellContent(cellId)]);
-        $(this).data('tipText', cellId).removeAttr('title');
-        $('<p class="tooltip"></p>').html(content).appendTo('body').fadeIn('slow');}, function() {
-          // Hover out code
-          $(this).attr('title', $(this).data('tipText'));
-          $('.tooltip').remove();
-        }).mousemove(function(e) {
-          var mousex = e.pageX + 20; //Get X coordinates
-          var mousey = e.pageY + 10; //Get Y coordinates
-          $('.tooltip').css({ top: mousey, left: mousex });
-        });
-
-        // Accordion, code found here : http://www.stemkoski.com/stupid-simple-jquery-accordion-menu/
-        jQuery(function() {
-        	jQuery('.menu-button').on('click',function() {
-        		jQuery('.menu-content').slideUp('fast');
-        		jQuery(this).next('.menu-content').slideDown('fast');
-        	});
+      // Accordion, code found here : http://www.stemkoski.com/stupid-simple-jquery-accordion-menu/
+      jQuery(function() {
+        jQuery('.menu-button').on('click',function() {
+          jQuery('.menu-content').slideUp('fast');
+          jQuery(this).next('.menu-content').slideDown('fast');
         });
       });
+      createAndRenderMap(getOptions());
+    });
     </script>
   </body>
 </html>
