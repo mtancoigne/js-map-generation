@@ -37,98 +37,71 @@
   </div>
 
     <script src="https://code.jquery.com/jquery-1.12.3.min.js" integrity="sha256-aaODHAgvwQW1bFOGXMeX+pC4PZIPsvn2h1sArYOhgXQ=" crossorigin="anonymous"></script>
-    <!--<script src="../js/mapgen.js" type="text/javascript"></script>
+    <script src="../js/mapgen.js" type="text/javascript"></script>
     <script src="../js/mapgen-objects.js" type="text/javascript"></script>
     <script src="../js/mapgen-privates.js" type="text/javascript"></script>
     <script src="../js/mapgen-methods.js" type="text/javascript"></script>
+    <script src="../js/demo_functions.js" type="text/javascript"></script>
     <script src="../js/demo_base_objects.js" type="text/javascript"></script>
-    <script src="../js/demo_room_samples.js" type="text/javascript"></script>-->
-    <script src="../build.js" type="text/javascript"></script>
-    <script src="../build-demo.js" type="text/javascript"></script>
+    <script src="../js/demo_room_samples.js" type="text/javascript"></script>
+    <!--<script src="../build.js" type="text/javascript"></script>
+    <script src="../build-demo.js" type="text/javascript"></script>-->
     <script type="text/javascript">
 
-    // Generating the map
-    var map=new MapGen({cellTypes:cellTypes, cleanLevel:4});
-    map.createMap();
-    //map.createMapFromSample(samples[2]);
-    map.createRooms();
-    map.removeSmallRooms(50);
+    var map=null;
+    var options={
+      // Options for the map generator
+      mapOptions:{
+        x:5,
+        y:5,
+        passes:3,
+        cleanLevel: 5,
+        wallPercent:30,
+        // Cell types are defined in demo.js
+        cellTypes: cellTypes,
+      }
+    }
 
-    /*
-      "game" specific "mechanisms" here. This is not included in the class
-      (beside of map.addItem())
-    */
-    // Creating ennemies, taking size of the map in account
-    createEnnemies('ennemy', living_things.player.level, map._getWalkableCells(true).length);
-    createEnnemies('boss', living_things.player.level, null, 1);
-    // Adding to the map
-    map.addItems(living_things, true);
-    // Creating life potions
-    createSimpleItem('life_potion', map._getWalkableCells(true).length, 2);
-    // Creating chests
-    createSimpleItem('token_strength', map._getWalkableCells(true).length, 3);
-    createSimpleItem('token_damage', map._getWalkableCells(true).length, 3);
-    // Adding them to the map.
-    map.addItems(dead_things, false); // Can even be in lava !
+    createAndRenderMap(options);
 
-    // Debug
-    //map.outlineRooms();
-    map._findPaths();
-
-    // Render the map
-    map.jQueryRender('#grid');
 
     /***************************************************************************
-    Beside this point, it's only debugging things (room overlays, and paths essay)
-
-    */
-    var cellSize= 14;
-
-    /*
-      Rooms overlays... May be included in the class later...
-    */
-    for(let i in map.rooms){
-      $('#rooms').append('<div class="'+map.cssPrefix+'room '+map.cssPrefix+'room-'+map.rooms[i].id+'-overlay" style="top:'+(map.rooms[i].box.xMin*cellSize)
-      +'px; left:'+(map.rooms[i].box.yMin*cellSize)
-      +'px; height:'+((map.rooms[i].box.xMax-map.rooms[i].box.xMin+1)*cellSize)
-      +'px; width:'+((map.rooms[i].box.yMax-map.rooms[i].box.yMin+1)*cellSize)
-      +'px"><h2>'+map.rooms[i].id+'</h2>'+(map.rooms[i].box.xMax-map.rooms[i].box.xMin)+' x '+(map.rooms[i].box.yMax-map.rooms[i].box.yMin)+'<br>C: '+map.rooms[i].box.cX+' x '+map.rooms[i].box.cY+'</div>')
-    }
-    $('#grid').prepend('<canvas id="'+map.cssPrefix+'pathes" width="'+(map.grid[0].length*cellSize)+'px" height="'+(map.grid.length*cellSize)+'px"></canvas>');
-
-    /*
-      Drawing all pathes on the overlay. May be included later as a class function.
-    */
-    var cId=map.cssPrefix+'pathes';
-    var c=document.getElementById(cId);
-    var ctx=c.getContext("2d");
-    ctx.lineWidth =2;
-    ctx.strokeStyle = '#096f00';
-    ctx.beginPath();
-    for (let i=0; i<map.distances.length; i++){
-      let idx1=map._getRoomIndex(map.distances[i][1][0]);
-      let idx2=map._getRoomIndex(map.distances[i][1][1])
-      ctx.moveTo((map.rooms[idx1].box.cY*cellSize), (map.rooms[idx1].box.cX*cellSize));
-      ctx.lineTo((map.rooms[idx2].box.cY*cellSize), (map.rooms[idx2].box.cX*cellSize));
-    }
-    ctx.closePath();
-    ctx.stroke();
-
-    /**
-      jQuery stuff to handle events on buttons
+      JQuery
     */
     $('#rooms').hide();
-    $('#'+cId).hide();
+    $('#map-pathes').hide();
+    /**
+      Events on buttons
+    */
     $('#toggleRooms').click(function(){
       $('#rooms').toggle();
     })
     $('#togglePathes').click(function(){
-      $('#'+cId).toggle();
+      $('#map-pathes').toggle();
     })
 
     $('.map-cell').hover(function(a){
       $('#position').text($(this).attr('class'))
     });
+
+    // Tooltips. (base from http://www.alessioatzeni.com/blog/simple-tooltip-with-jquery-only-text/)
+    $(document).ready(function() {
+      // Tooltip only Text
+      $('.map-cell').hover(function(){
+        // Hover over code
+        var cellId = $(this).attr('title');
+        var content='Cell :'+displayData(map.cells[cellId])+'Content:' +displayData(map.items[map.getCellContent(cellId)]);
+        $(this).data('tipText', cellId).removeAttr('title');
+        $('<p class="tooltip"></p>').html(content).appendTo('body').fadeIn('slow');}, function() {
+          // Hover out code
+          $(this).attr('title', $(this).data('tipText'));
+          $('.tooltip').remove();
+        }).mousemove(function(e) {
+          var mousex = e.pageX + 20; //Get X coordinates
+          var mousey = e.pageY + 10; //Get Y coordinates
+          $('.tooltip').css({ top: mousey, left: mousex });
+        });
+      });
     </script>
   </body>
 </html>

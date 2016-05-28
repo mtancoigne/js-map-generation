@@ -1,134 +1,18 @@
 /*
 
-GENERAL FUNCTIONS
-
-*/
-
-/**
-Generates item states, so all items have the same
-*/
-function itemStats(options){
-  var o={
-    // Life of the cell. -1 is infinite, 0 is dead;
-    life:-1,
-    // Attack power
-    damage:0,
-    // Strenght level
-    strenght:0,
-    // Current level (maybe that should be calculated from XP)
-    level:1,
-    // Current experience
-    xp:0,
-    // How much xp is won with this
-    giveXp:0
-  };
-
-  // Filling properties
-  for(let i in o){
-    if(options[i]!=undefined){o[i]=options[i];}
-  }
-  return o;
-}
-
-/**
-  Represents an item (static item, ennemy, player,...)
-  @constructor
-*/
-var Item=function(options){
-  var o={
-    name:'NO NAME',
-    description: 'NO DESCRIPTION',
-    canMove:false,
-    storable: false,
-    consumable: false,
-    effects:[],
-    inventory:[],
-    stats:{},
-    className:'item',
-  };
-  // Filling properties
-  for(let i in o){
-    if(options[i]!=undefined){this[i]=options[i];}
-    else{this[i]=o[i];}
-  }
-};
-
-// Ennemies are created dynamically with this function:
-function createEnnemies(type, playerLevel, walkableCells, number){
-  var nb=0;
-  if(number!=undefined){
-    nb=number;
-  }else{
-    nb=Math.floor(5*walkableCells/100);
-  }
-  // Number of ennemies to generate:
-  var ennemies={};
-  for(let i=0; i<nb; i++){
-    // Select random ennemy
-    let ennemy=ennemyNames[Math.floor(Math.random()*ennemyNames.length)];
-    let ennemyStats={};
-    // Generate random states
-    var randomGen=Math.floor(Math.random()*101);
-    if(randomGen<80){
-      ennemyStats.life=basePlayerStats.life*0.8;
-      ennemyStats.damage=basePlayerStats.damage;
-      ennemyStats.strenght=basePlayerStats.strenght;
-      ennemyStats.level=basePlayerStats.level;
-      ennemyStats.giveXp=ennemyStats.level*10;
-    }else if (randomGen<90) {
-      ennemyStats.life=basePlayerStats.life*1.1;
-      ennemyStats.damage=Math.ceil(basePlayerStats.damage*(Math.floor(Math.random()*0.2)+1));
-      ennemyStats.strenght=Math.ceil(basePlayerStats.strenght*(Math.floor(Math.random()*0.2)+1));
-      ennemyStats.level=basePlayerStats.level+1;
-      ennemyStats.giveXp=ennemyStats.level*20;
-    }else if(randomGen<97) {
-      ennemyStats.life=basePlayerStats.life*1.4;
-      ennemyStats.damage=Math.ceil(basePlayerStats.damage*(Math.floor(Math.random()*0.4)+1));
-      ennemyStats.strenght=Math.ceil(basePlayerStats.strenght*(Math.floor(Math.random()*0.4)+1));
-      ennemyStats.level=basePlayerStats.level+2;
-      ennemyStats.giveXp=ennemyStats.level30;
-    }else{
-      ennemyStats.life=basePlayerStats.life*1.6;
-      ennemyStats.damage=Math.ceil(basePlayerStats.damage*(Math.floor(Math.random()*0.6)+1));
-      ennemyStats.strenght=Math.ceil(basePlayerStats.strenght*(Math.floor(Math.random()*0.6)+1));
-      ennemyStats.level=basePlayerStats.level+3;
-      ennemyStats.giveXp=ennemyStats.level*40;
-    }
-
-     living_things[type+'_'+i]=new Item({
-      name:ennemy.name,
-      description:ennemy.description+' <a href="'+ennemy.more+'" target="_blank">More...</a>',
-      canMove:true,
-      stats: itemStats(ennemyStats),
-      className: (number===1?'boss': 'ennemy'),
-    })
-  }
-}
-
-function createSimpleItem(name, walkableCells, percent, number){
-  var nb=0;
-  if(number!=undefined){
-    nb=number
-  }else{
-    nb=Math.floor((walkableCells*Math.random()*percent)/100)
-  }
-  for(i=0; i<nb; i++){
-    dead_things[name+'_'+i]=new Item(availableItems[name]);
-  }
-}
-
-/*
-
 OBJECTS CONFIGURATION
 
 */
 
+// Some bosses :
 var bossNames=[
   {name:'Acará virus', description:'The Acará virus (ACAV) is a possible species in the genus Bunyavirus, belonging to the Capim serogroup. It is isolated from sentinel mice, Culex species, and the rodent Nectomys squamipes in Para, Brazil and in Panama. The symptoms of the Acará virus is death. Sometimes reported to cause disease in humans.', more:'https://en.wikipedia.org/wiki/Acar%C3%A1_virus'},
   {name:'Banana virus X', description:'Cafeteria roenbergensis virus (CroV) is a giant virus that infects the marine bicosoecid flagellate Cafeteria roenbergensis. CroV has one of the largest genomes of all marine virus known, consisting of ~730,000 base pairs of double-stranded DNA', more:'https://en.wikipedia.org/wiki/Cafeteria_roenbergensis_virus'},
   {name:'Mokola virus', description:'Mokola virus (MOKV) is a RNA virus related to the Rabies virus that has been sporadically isolated from mammals across sub-Saharan Africa. The majority of isolates have come from domestic cats exhibiting symptoms characteristically associated to Rabies virus infection.', more:'https://en.wikipedia.org/wiki/Mokola_virus'},
   {name:'Nipah Virus', description:'Nipah virus was identified in April 1999, when it caused an outbreak of neurological and respiratory disease on pig farms in peninsular Malaysia, resulting in 257 human cases, including 105 human deaths and the culling of one million pigs.', more:'https://en.wikipedia.org/wiki/Henipavirus#Nipah_virus'},
 ]
+
+// Some ennemies : bacterias and fungis
 var ennemyNames=[
   // Lazy me... http://alltoptens.com/top-ten-most-dangerous-bacteria-on-earth/
   // This list was completed with wikipedia articles and some names has been changed or removed when info wasn't clear enough.

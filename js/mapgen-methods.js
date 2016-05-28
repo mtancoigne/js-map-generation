@@ -260,6 +260,7 @@ MapGen.prototype.jQueryRender=function(target, prefix){
       // Preparing the cell
       let cell=[
         '<div ',
+        'title="'+x+':'+y+'"',
         'id="'+ prefix + 'cell-' + x + '-' + y +'" ',
         'class="'+ classString +'" ',
         '></div>'
