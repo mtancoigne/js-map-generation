@@ -45,7 +45,6 @@ const MapGen=function(options){
   this.cells={};
   this.grid=[];
   this.rooms=[];
-  this.cid=0;
 
   // Base cell names
   this.WALL='wall';
@@ -79,9 +78,7 @@ MapGen.prototype.Cell=function(id, x, y, room, type){
 * Returns an object representing a CellType
 */
 MapGen.prototype.CellType=function(options){
-  this.cid++;
   var o={
-    id:this.cid,
     // Name
     name:       null,
     // Is it possible to walk on it ?
@@ -95,5 +92,5 @@ MapGen.prototype.CellType=function(options){
     // Is it a base cell ? (floor and wall only.)
     isBaseCell: false,
   };
-  return Object.assign(o, options);
+  return JSON.parse(JSON.stringify(Object.assign(o, options)));
 }
