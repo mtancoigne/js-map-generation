@@ -1,16 +1,16 @@
 /**
-  Creates a map of size base*(passes^2).
-  Calling this function with no params will use the defaults values.
+Creates a map of size base*(passes^2).
+Calling this function with no params will use the defaults values.
 
-  Note that if you want to skip a specific param in the list, you should make it `undefined`
-  (ie: `createMap(5,5,4, undefined, 2,5)` Note that the last param was omited)
+Note that if you want to skip a specific param in the list, you should make it `undefined`
+(ie: `createMap(5,5,4, undefined, 2,5)` Note that the last param was omited)
 
-  @param int xLength - Base width of the map
-  @param int yLength - Base height of the map
-  @param int passes - Number of passes for map refinement
-  @param int cleanLevel - Whether or not clean the map (remove lonely cells. Value from 0 to 5, 0 being no cleanup and 5 the max.
-  @param int wallPercent - Wall/floor ratio
-  @param int sameSubCellPercent - Chances for a cell to be of its predecessor type, while subdivising the map
+@param int xLength - Base width of the map
+@param int yLength - Base height of the map
+@param int passes - Number of passes for map refinement
+@param int cleanLevel - Whether or not clean the map (remove lonely cells. Value from 0 to 5, 0 being no cleanup and 5 the max.
+@param int wallPercent - Wall/floor ratio
+@param int sameSubCellPercent - Chances for a cell to be of its predecessor type, while subdivising the map
 */
 MapGen.prototype.createMap=function(xLength, yLength, passes, cleanLevel, wallPercent, sameSubCellPercent){
   // Arguments:
@@ -106,7 +106,7 @@ MapGen.prototype.createMap=function(xLength, yLength, passes, cleanLevel, wallPe
 }
 
 /**
-  Finds all the rooms in the map, fills this.rooms and completes this.cells.
+Finds all the rooms in the map, fills this.rooms and completes this.cells.
 */
 MapGen.prototype.createRooms=function(){
   var roomId=1; // Room identifier
@@ -138,26 +138,26 @@ MapGen.prototype.createRooms=function(){
 
 
 /**
-  Adds an additionnal class to wall cells next to a room for nice styling.
-  @todo Make this thing work.
+Adds an additionnal class to wall cells next to a room for nice styling.
+@todo Make this thing work.
 */
 /*MapGen.prototype.outlineRooms=function(){
-  var twalls=0
-  var walls=0;
-  for(let i in this.cells){
-    if(this._getCellSameNeighbours(this.cells[i].x, this.cells[i].y)<8 && this.cells[i].type.name===this.WALL){
-      //console.log({cell:i, type:this.cells[i].type.name, sn:this._getCellSameNeighbours(this.cells[i].x, this.cells[i].y)});
-      //console.log(this.cells[this.cells[i].x+':'+this.cells[i].y]);
-      this.cells[i].type.addClass('wall-close');
-      walls++;
-    }
-    twalls++;
-  }
+var twalls=0
+var walls=0;
+for(let i in this.cells){
+if(this._getCellSameNeighbours(this.cells[i].x, this.cells[i].y)<8 && this.cells[i].type.name===this.WALL){
+//console.log({cell:i, type:this.cells[i].type.name, sn:this._getCellSameNeighbours(this.cells[i].x, this.cells[i].y)});
+//console.log(this.cells[this.cells[i].x+':'+this.cells[i].y]);
+this.cells[i].type.addClass('wall-close');
+walls++;
+}
+twalls++;
+}
 }*/
 
 /**
-  Remove really small rooms
-  @param int minSize - Minimum size for a room to be kept.
+Remove really small rooms
+@param int minSize - Minimum size for a room to be kept.
 */
 MapGen.prototype.removeSmallRooms=function(minSize){
   // Purge small rooms and convert them to walls
@@ -170,7 +170,7 @@ MapGen.prototype.removeSmallRooms=function(minSize){
         // Wall conversion
         this.grid[this.rooms[i].cells[j][0]][this.rooms[i].cells[j][1]]=this.WALL;
         // Cell update
-        this.cells[this.rooms[i].cells[j][0]+':'+this.rooms[i].cells[j][1]].type=new this.CellType(this.cellTypes[this.WALL]);
+        this.cells[this.rooms[i].cells[j][0]+':'+this.rooms[i].cells[j][1]].type= this.CellType(this.cellTypes[this.WALL]);
         this.cells[this.rooms[i].cells[j][0]+':'+this.rooms[i].cells[j][1]].roomId=null;
       }
     }else{
@@ -184,15 +184,15 @@ MapGen.prototype.removeSmallRooms=function(minSize){
 }
 
 /**
-  Converts a sample array into a base grid.
-  array should be like:
-  [
-    '000',
-    '010',
-    '000'
-  ]
-  where 0 is a wall cell and 1 is a room cell
-  @param array sample - Sample data
+Converts a sample array into a base grid.
+array should be like:
+[
+'000',
+'010',
+'000'
+]
+where 0 is a wall cell and 1 is a room cell
+@param array sample - Sample data
 */
 MapGen.prototype.createMapFromSample=function(sample){
   var out=[];
@@ -224,10 +224,10 @@ MapGen.prototype.addItems=function(itemsToCreate, avoidDeadlyAreas){
 }
 
 /**
-  Renders the map using jquery in the given target.
-  The rendered lines/cells can have a prefixed id.
-  @param string target - Target id, with the # for jQuery.
-  @param string prefix - Prefix for css classes. Default is `map-`
+Renders the map using jquery in the given target.
+The rendered lines/cells can have a prefixed id.
+@param string target - Target id, with the # for jQuery.
+@param string prefix - Prefix for css classes. Default is `map-`
 */
 MapGen.prototype.jQueryRender=function(target, prefix){
   if(prefix===undefined){prefix=this.cssPrefix};

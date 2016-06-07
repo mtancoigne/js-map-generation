@@ -10,6 +10,6 @@
 #============================================================================
 # As long as I don't get the JS builder around, i'll do this...
 echo '' > build.js
-cat js/mapgen.js js/mapgen-objects.js js/mapgen-privates.js js/mapgen-methods.js >> build.js
+cat js/mapgen.js js/mapgen-privates.js js/mapgen-methods.js >> build.js
 echo '' > build-demo.js
 cat js/demo_functions.js js/demo_base_objects.js js/demo_room_samples.js >>build-demo.js

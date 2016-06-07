@@ -29,78 +29,52 @@ The object can be created with an object of options as follow:
 };
 */
 const MapGen=function(options){
-  var o={
-    // Base map width
-    x:5,
-    // Base map width
-    y:5,
-    // Number of subdivisions
-    passes:4,
-    // Cleaning level (0-5)
-    cleanLevel:2,
-    // Percentage of walls
-    wallPercent:50,
-    // When creating sub-cells, percentage of chances to have the same type:
-    sameSubCellPercent:80,
-    // Css prefix for classes
-    cssPrefix:'map-',
-    // default cell types
-    cellTypes:{
-      wall:    {name:'wall',   isWalkable:false, classNames:['wall'],   canMove:false, useInMapGen:true, isBaseCell:true},
-      floor:   {name:'floor',  isWalkable:true,  classNames:['floor'],  canMove:false, useInMapGen:true, isBaseCell:true},
-    },
-    // Default items. Use this.createItems() to fill this, after map generation.
-    items:{}
-  };
-  // merging options
-  for(let t in options){
-    o[t]=options[t];
-  }
-  // creating vars from options
-  for(let t in o){
-    this[t]=o[t];
-  }
 
-  // Checking base types.
-  if(!this.cellTypes.hasOwnProperty('wall')){
-    console.warn('You have not defined any wall in your cell types.')
-  }
-  if(!this.cellTypes.hasOwnProperty('floor')){
-    console.warn('You have not defined any floor in your cell types.')
-  }
+  // Passing options to this
+  this.x                  = options[x] != undefined ? options[x] :                                   5;
+  this.y                  = options[y] != undefined ? options[y] :                                   5;
+  this.passes             = options[passes] != undefined ? options[passes] :                         4;
+  this.cleanLevel         = options[cleanLevel] != undefined ? options[cleanLevel] :                 2;
+  this.wallPercent        = options[wallPercent] != undefined ? options[wallPercent] :               50;
+  this.sameSubCellPercent = options[sameSubCellPercent] != undefined ? options[sameSubCellPercent] : 80;
+  this.cssPrefix          = options[cssPrefix] != undefined ? options[cssPrefix] :                   'map-';
+  this.cellTypes          = options[cellTypes] != undefined ? options[cellTypes] : {
+    wall:    {name:'wall',   isWalkable:false, classNames:['wall'],   canMove:false, useInMapGen:true, isBaseCell:true},
+    floor:   {name:'floor',  isWalkable:true,  classNames:['floor'],  canMove:false, useInMapGen:true, isBaseCell:true},
+  },
+  this.items={};
+  this.cells={};
+  this.grid=[];
 
-  // Base cell types
+  // Base cell names
   this.WALL='wall';
   this.FLOOR='floor';
 
-  // Current map
-  this.grid=[];
-  // Room data
-  this.rooms=[];
-  this.cells={};
+  // Checking base types.
+  if(!this.cellTypes.hasOwnProperty('wall')){console.warn('You have not defined any wall in your cell types.');}
+  if(!this.cellTypes.hasOwnProperty('floor')){console.warn('You have not defined any floor in your cell types.');}
 }
-"use strict";
 
 /**
   Represents a cell
-  @constructor
 */
 MapGen.prototype.Cell=function(id, x, y, room, type){
-  // Cell id
-  this.id=(id!=undefined?id:null);
-  // Placement in x
-  this.x=(x!=undefined?x:null);
-  // Placement in Y
-  this.y=(x!=undefined?y:null);
-  // Room id
-  this.roomId=(room!=undefined?room:null);
-  // Cell type
-  this.type=(type!=undefined?type:null);
+  return{
+    // Cell id
+    id: id != undefined ? id : null,
+    // Placement in x
+    x: x != undefined ? x : null,
+    // Placement in Y
+    y: x != undefined ? y : null,
+    // Room id
+    roomId: room != undefined ? room : null,
+    // Cell type
+    type: type != undefined ? type : null,
+  }
 }
 
 /**
   Represents a cell type
-  @constructor
 */
 MapGen.prototype.CellType=function(options){
   var o={
@@ -118,25 +92,7 @@ MapGen.prototype.CellType=function(options){
     isBaseCell:false,
   };
 
-  // Filling properties
-  if((typeof options)!= 'object'){
-    console.warn('New CellTypes using defaults... this has been passed to the contructor:');
-    console.warn(options);
-  }else{
-    for(let i in o){
-      if(options[i]!=undefined){this[i]=options[i];}
-      else{this[i]=o[i];}
-    }
-  }
-}
-
-/**
-  Setter for CellTypes classNames that will avoid doubles.
-*/
-MapGen.prototype.CellType.prototype.addClass=function(newClass){
-  if(this.classNames.indexOf(newClass)===-1){
-    this.classNames.push(newClass);
-  }
+  return Object.assign(o, options);
 }
 /**
   Returns the current cell type, or a WALL if outside of the map.
