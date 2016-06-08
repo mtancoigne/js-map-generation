@@ -58,11 +58,9 @@ const MapGen=function(options){
 /**
 * Returns an object representing a Cell
 */
-MapGen.prototype.Cell=function(id, x, y, room, type){
+MapGen.prototype.Cell=function(x, y, room, type){
   //console.log(type);
   return{
-    // Cell id
-    id: id != undefined ? id : null,
     // Placement in x
     x: x != undefined ? x : null,
     // Placement in Y

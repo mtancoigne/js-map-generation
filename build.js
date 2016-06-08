@@ -59,11 +59,9 @@ const MapGen=function(options){
 /**
 * Returns an object representing a Cell
 */
-MapGen.prototype.Cell=function(id, x, y, room, type){
+MapGen.prototype.Cell=function(x, y, room, type){
   //console.log(type);
   return{
-    // Cell id
-    id: id != undefined ? id : null,
     // Placement in x
     x: x != undefined ? x : null,
     // Placement in Y
@@ -329,11 +327,9 @@ MapGen.prototype._sortPair=function(arr, dataCol){
 * Fills this.cells with grid data
 */
 MapGen.prototype._convertGridToNamedCells=function(){
-  var id=1;
   for(let y=0; y<this.grid.length; y++){
     for (let x=0; x<this.grid[y].length; x++){
-      this.cells[x+':'+y] = this.Cell(id, x, y, null, this.CellType(this.cellTypes[this.grid[y][x]]));
-      id++;
+      this.cells[x+':'+y] = this.Cell(x, y, null, this.CellType(this.cellTypes[this.grid[y][x]]));
     }
   }
 }

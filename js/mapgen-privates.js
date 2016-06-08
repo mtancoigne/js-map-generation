@@ -232,11 +232,9 @@ MapGen.prototype._sortPair=function(arr, dataCol){
 * Fills this.cells with grid data
 */
 MapGen.prototype._convertGridToNamedCells=function(){
-  var id=1;
   for(let y=0; y<this.grid.length; y++){
     for (let x=0; x<this.grid[y].length; x++){
-      this.cells[x+':'+y] = this.Cell(id, x, y, null, this.CellType(this.cellTypes[this.grid[y][x]]));
-      id++;
+      this.cells[x+':'+y] = this.Cell(x, y, null, this.CellType(this.cellTypes[this.grid[y][x]]));
     }
   }
 }
